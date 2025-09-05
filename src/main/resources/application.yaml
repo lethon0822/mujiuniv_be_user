@@ -50,6 +50,7 @@ spring:
     properties:
       hibernate:
         jdbc:
+          time_zone: UTC
           batch_size: 20
         format_sql: true # 쿼리문 로그를 찍어줄 때 보기 편하게 포맷팅
         order_updates: true
