@@ -24,15 +24,46 @@ repositories {
     mavenCentral()
 }
 
+//ext {
+//    set('springCloudVersion', "2025.0.0")
+//}
+
 dependencies {
+    //jwt
+    // https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-impl
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.6'
+
+    // https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-api
+    implementation 'io.jsonwebtoken:jjwt-api:0.12.6'
+
+    // https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-api
+    implementation 'io.jsonwebtoken:jjwt-jackson:0.12.6'
+
+    // https://mvnrepository.com/artifact/io.hypersistence/hypersistence-utils-hibernate-63
+    // 이거 뭔지 나중에 알아오겠음
+    implementation 'io.hypersistence:hypersistence-utils-hibernate-63:3.10.3' //TSID
+//
+//    //유레카
+//    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-server'
+//
+    //  유효성 검사 의존성과 엑터
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-validation' //validation
+
+    //스프링 시큐리티
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+
     // google email certification
     implementation 'org.springframework.boot:spring-boot-starter-mail'
     implementation 'org.mindrot:jbcrypt:0.4'
 
+    // jpa 의존성
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
     // redis
-    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
-    implementation 'org.springframework.boot:spring-boot-starter'
-    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+//    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+//    implementation 'org.springframework.boot:spring-boot-starter'
+//    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 
     // --- JDBC 로깅 (log4jdbc) ---
     implementation 'org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:1.16'
@@ -64,6 +95,12 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
+
+//dependencyManagement {
+//    imports {
+//        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+//    }
+//}
 
 tasks.named('test') {
     useJUnitPlatform()
