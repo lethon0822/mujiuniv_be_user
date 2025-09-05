@@ -37,15 +37,15 @@ public class Student {
     @Column(nullable = false)
     private LocalDate entDate;
 
-    @Column(nullable = false)
+    @Column
     private LocalDate graduDate;
 
     @Column(nullable = false, length = 10)
-    private String status;
+    private String status = "재학";
 
     @Column(nullable = false, length = 10)
-    private int majCredit;
+    private int majCredit = 0;
 
     @Column(nullable = false, length = 10)
-    private int geCredit;
+    private int geCredit = 0;
 }
