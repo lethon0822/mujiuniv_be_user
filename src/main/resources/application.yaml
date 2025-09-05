@@ -1,0 +1,72 @@
+constants:
+  file:
+    directory: /home/download   # 그대로 유지
+
+spring:
+  application:
+    name: rainbow-academic-management
+
+  datasource:
+    # log4jdbc 사용 중이므로 DriverSpy + jdbc:log4jdbc: 형태 유지
+    url: jdbc:log4jdbc:mariadb://192.168.0.39/first_project?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Seoul
+    username: green3
+    password: figma502
+    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 5
+      idle-timeout: 300000       # 5분
+      max-lifetime: 1800000      # 30분
+      connection-timeout: 30000  # 30초
+
+  jackson:
+    time-zone: Asia/Seoul
+    date-format: yyyy-MM-dd HH:mm:ss
+
+mybatis:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true
+    default-statement-timeout: 10
+  # resources 폴더 기준 classpath 접두사로 명시하는 것이 안전
+  mapper-locations: classpath:/mappers/**/*.xml
+
+mail:
+  smtp:
+    host: "smtp.gmail.com"
+    username: "mujiuniv@gmail.com"
+    password: "dqknokdqkusfndls"
+    port: 587
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+          connectiontimeout: 3000
+          timeout: 3000
+          writetimeout: 3000
+
+server:
+  port: 8080
+  servlet:
+    session:
+      cookie:
+        same-site: lax   # Lax / Strict / None
+        path: /          # 기본은 /
+        # domain: localhost  # 특별히 필요 없으면 아예 빼두는 게 안전
+
+logging:
+  level:
+    root: INFO
+    # 패키지 로깅(네 프로젝트 패키지명으로 조정)
+    com.rainbowuniv: DEBUG
+    org.mybatis: DEBUG
+    # log4jdbc 카테고리
+    jdbc.sqlonly: DEBUG     # 실행된 SQL
+    jdbc.sqltiming: INFO    # 실행시간 포함
+    jdbc.audit: OFF
+    jdbc.resultset: OFF
+    jdbc.connection: OFF
+
