@@ -14,9 +14,8 @@ import java.time.LocalDate;
 @Setter
 @EqualsAndHashCode
 public class Professor {
-    @Id
-    private Long userId;
 
+    @Id
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", nullable = false)
     @MapsId

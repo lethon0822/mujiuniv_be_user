@@ -1,12 +1,11 @@
 package com.green.muziuniv_be_user.entity.department;
 
+import com.green.muziuniv_be_user.entity.professor.Professor;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.ColumnDefault;
-import org.hibernate.annotations.DialectOverride;
-import org.hibernate.annotations.DynamicInsert;
+
 
 @Entity
 @Getter
@@ -17,7 +16,9 @@ public class Department {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long deptId;
 
-    private Long headProfId;
+    @OneToOne
+    @JoinColumn(name = "head_prof_id", nullable = false)
+    private Professor headProfId;
 
     @Column(nullable = false, length = 20)
     private String deptName;
