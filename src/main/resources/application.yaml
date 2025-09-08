@@ -2,6 +2,9 @@ constants:
   file:
     directory: /home/download   # 그대로 유지
 
+  open-feign:
+    function: rainbow-academic-function
+
   jwt:
     issuer: green@green.com
     schema: Bearer
