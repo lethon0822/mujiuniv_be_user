@@ -1,6 +1,5 @@
 package com.green.muziuniv_be_user.entity.user;
 
-import com.green.muziuniv_be_user.entity.common.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -12,7 +11,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class User extends BaseTimeEntity {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
@@ -47,7 +46,5 @@ public class User extends BaseTimeEntity {
     @Column(length = 50)
     private String userPic;
 
-    @Column(length = 50)
-    private String account;
 
 }
