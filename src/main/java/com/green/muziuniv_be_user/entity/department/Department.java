@@ -16,9 +16,9 @@ public class Department {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long deptId;
 
-    @OneToOne
-    @JoinColumn(name = "head_prof_id", nullable = false)
-    private Professor headProfId;
+//    @OneToOne
+//    @JoinColumn(name = "head_prof_id", nullable = false)
+    private Long headProfId;
 
     @Column(nullable = false, length = 20)
     private String deptName;
@@ -37,5 +37,6 @@ public class Department {
 
     @Column(nullable = false, length = 50, unique = true)
     private String deptCode;
+
 }
 
