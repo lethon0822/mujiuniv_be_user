@@ -3,11 +3,12 @@ package com.green.muziuniv_be_user.application.account;
 
 import com.green.muziuniv_be_user.application.account.model.*;
 import com.green.muziuniv_be_user.common.model.JwtUser;
-import com.green.muziuniv_be_user.openfeign.semester.SemesterClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 @Slf4j
 @Service
@@ -18,20 +19,20 @@ public class AccountService {
    // private final SemesterClient semesterClient;
 
    public AccountLoginDto login(AccountLoginReq req) {
-      AccountLoginRes res = accountMapper.findByLoginId(req);
-      if (res == null) return null; //TODO: 예외 발생
-
-
+      AccountLoginRes res = accountMapper.findByUserInfo(req);
+//      if(res == null || !passwordEncoder.matches(req.getPassword(), res.getPassword())) {
+//         throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "아이디/비밀번호를 확인해 주세요.");
+//      }
 
       // 보안상 노출 방지
       res.setPassword(null);
       return AccountLoginDto.builder()
               .accountLoginRes(res)
-              .jwtUser(new JwtUser())
+              .jwtUser(new JwtUser(res.getUserId(), res.getUserRole()))
               .build();
    }
 
-   // -------------------------------------------------------------
+
 
    public String encodePassword(String rawPassword) {
       return passwordEncoder.encode(rawPassword);

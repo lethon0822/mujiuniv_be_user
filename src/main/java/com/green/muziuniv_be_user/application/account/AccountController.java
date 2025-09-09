@@ -32,35 +32,7 @@ public class AccountController {
 
         //토큰 생성
         jwtTokenManager.issue(response,result.getJwtUser());
-
-
-
-
-
-
-// ----------------------------------------------------------------------------
-////        // 세션 강제 생성
-//        HttpSession session = req.getSession(true);
-//        session.setAttribute("userId",result.getUserId());
-//
-//        // 스프링 시큐리티 인증객체 생성
-//        var auth = new UsernamePasswordAuthenticationToken(
-//                result.getLoginId(),        // principal (식별자)
-//                null,                       // credentials (비밀번호는 저장 안 함)
-//                List.of(new SimpleGrantedAuthority("ROLE_USER")) // 권한 필요 시 매핑
-//        );
-//
-//        // SecurityContextHolder 에 등록
-//        SecurityContext context = SecurityContextHolder.createEmptyContext();
-//        context.setAuthentication(auth);
-//        SecurityContextHolder.setContext(context);
-//
-//        // 세션에 컨텍스트 저장 (JSESSIONID와 매핑)
-//        new HttpSessionSecurityContextRepository().saveContext(context, req, res);
-//
-//        log.info("[login] ok, sessionId={}", session.getId());
-//        return ResponseEntity.ok(result);
-        return new ResultResponse<>("로그인 성공", 1);
+        return new ResultResponse<>("로그인 성공", result.getAccountLoginRes());
     }
 
 

@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @Data
 public class AccountLoginRes {
-    private int userId;
+    private Long userId;
     private String userRole;
     private String userName;
     private int loginId;
