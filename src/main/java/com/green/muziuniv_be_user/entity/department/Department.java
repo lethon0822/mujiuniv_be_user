@@ -17,7 +17,7 @@ public class Department {
     private Long deptId;
 
     @OneToOne
-    @JoinColumn(name = "head_prof_id", nullable = false)
+    @JoinColumn(name = "head_prof_id")
     private Professor headProfId;
 
     @Column(nullable = false, length = 20)
@@ -37,5 +37,6 @@ public class Department {
 
     @Column(nullable = false, length = 10, unique = true)
     private String deptCode;
+
 }
 

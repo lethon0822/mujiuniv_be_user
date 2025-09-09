@@ -22,7 +22,7 @@ public class User {
     @Column(nullable = false,length = 10)
     private String userRole;
 
-    @Column(nullable = false,length = 25)
+    @Column(nullable = false,length = 225)
     private String password;
 
     @Column(nullable = false,length = 10)
@@ -40,7 +40,7 @@ public class User {
     @Column(nullable = false, unique = true, length = 50)
     private String email;
 
-    @Column(nullable = false, unique = true, length = 11)
+    @Column(nullable = false, unique = true, length = 13)
     private String phone;
 
     @Column(length = 50)

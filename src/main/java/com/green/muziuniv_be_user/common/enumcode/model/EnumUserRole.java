@@ -1,0 +1,27 @@
+package com.green.muziuniv_be_user.common.enumcode.model;
+
+
+import com.green.muziuniv_be_user.common.enumcode.AbstractEnumCodeConverter;
+import com.green.muziuniv_be_user.common.enumcode.EnumMapperType;
+import jakarta.persistence.Converter;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
+
+@Getter
+@RequiredArgsConstructor
+public enum EnumUserRole implements EnumMapperType {
+    STUDENT("01", "학생"),
+    PROFESSOR("02", "교수"),
+    STAFF("03", "직원")
+
+    ;
+
+    private final String code;
+    private final String value;
+
+    @Converter(autoApply = true)
+    public static class CodeConverter extends AbstractEnumCodeConverter<EnumUserRole> {
+        public CodeConverter() { super(EnumUserRole.class, false); }
+    }
+}
