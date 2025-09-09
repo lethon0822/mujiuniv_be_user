@@ -48,4 +48,6 @@ public class Student {
 
     @Column(nullable = false, length = 10)
     private int geCredit = 0;
+
+
 }

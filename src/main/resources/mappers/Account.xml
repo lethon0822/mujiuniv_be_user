@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.green.muziuniv_be_user.application.account.AccountMapper">
+
+    <select id="findByUserInfo">
+        SELECT u.user_id, u.user_role, u.user_name, u.password,
+               u.login_id, d.dept_name
+        FROM user u
+        LEFT JOIN student s ON u.user_id = s.user_id
+        LEFT JOIN professor p ON u.user_id = p.user_id
+        JOIN department d ON d.dept_id = COALESCE(s.dept_id, p.dept_id)
+        WHERE u.login_id = #{loginId};
+    </select>
+</mapper>
