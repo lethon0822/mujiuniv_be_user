@@ -20,7 +20,7 @@ import java.util.Map;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/account")
+@RequestMapping("/account")
 public class AccountController {
     private final AccountService accountService;
     private final JwtTokenManager jwtTokenManager;
