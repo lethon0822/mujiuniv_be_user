@@ -35,7 +35,7 @@ public class Department {
     @Column(nullable = false)
     private int deptMaxStd;
 
-    @Column(nullable = false, length = 50, unique = true)
+    @Column(nullable = false, length = 10, unique = true)
     private String deptCode;
 }
 
