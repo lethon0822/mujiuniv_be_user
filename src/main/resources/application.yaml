@@ -3,7 +3,7 @@ constants:
     directory: /home/download   # 그대로 유지
 
   open-feign:
-    function: rainbow-academic-not-user
+    function: rainbow-academic-function
 
   jwt:
     issuer: green@green.com
