@@ -9,6 +9,10 @@
         LEFT JOIN student s ON u.user_id = s.user_id
         LEFT JOIN professor p ON u.user_id = p.user_id
         JOIN department d ON d.dept_id = COALESCE(s.dept_id, p.dept_id)
-        WHERE u.login_id = #{loginId};
+        <where>
+            u.login_id = #{loginId}
+        </where>
+
     </select>
 </mapper>
+

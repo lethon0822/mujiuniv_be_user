@@ -48,8 +48,8 @@ dependencies {
     implementation 'io.hypersistence:hypersistence-utils-hibernate-63:3.10.3' //TSID
 //
 //    //유레카
-//    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-server'
-//
+    //implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-server'
+
     //  유효성 검사 의존성과 엑터
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.boot:spring-boot-starter-validation' //validation
