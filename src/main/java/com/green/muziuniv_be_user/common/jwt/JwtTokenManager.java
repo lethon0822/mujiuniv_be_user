@@ -3,11 +3,14 @@ package com.green.muziuniv_be_user.common.jwt;
 
 import com.green.muziuniv_be_user.common.constants.ConstJwt;
 import com.green.muziuniv_be_user.common.model.JwtUser;
+import com.green.muziuniv_be_user.common.model.UserPrincipal;
 import com.green.muziuniv_be_user.common.util.CookieUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 //JWT 총괄 책임자
@@ -89,5 +92,14 @@ public class JwtTokenManager {
     public void signOut(HttpServletResponse response) {
         deleteAccessTokenInCookie(response);
         deleteRefreshTokenInCookie(response);
+    }
+
+    public Authentication getAuthentication(HttpServletRequest request) {
+        String accessToken = getAccessTokenFromCookie(request);
+        if(accessToken == null){ return null; }
+        JwtUser jwtUser = getJwtUserFromToken(accessToken);
+        //if(jwtUser == null) { return null; } //토큰이 오염됐을 시 예외발생하기 때문에 null처리는 안 해도 된다.
+        UserPrincipal userPrincipal = new UserPrincipal(jwtUser);
+        return new UsernamePasswordAuthenticationToken(userPrincipal, null, userPrincipal.getAuthorities());
     }
 }
