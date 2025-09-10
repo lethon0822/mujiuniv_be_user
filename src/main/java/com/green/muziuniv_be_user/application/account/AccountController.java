@@ -4,7 +4,7 @@ package com.green.muziuniv_be_user.application.account;
 import com.green.muziuniv_be_user.application.account.model.*;
 import com.green.muziuniv_be_user.common.jwt.JwtTokenManager;
 import com.green.muziuniv_be_user.common.model.ResultResponse;
-import com.green.muziuniv_be_user.common.model.UserPrincipal;
+import com.green.muziuniv_be_user.common.model.SignedUser;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -14,7 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -69,12 +68,13 @@ public class AccountController {
     }
 
     @GetMapping("/profile")
-    public ResultResponse<?> getProfileUser(@AuthenticationPrincipal UserPrincipal userPrincipal) {
-        log.info("profileUserId: {}", userPrincipal);
+    public ResultResponse<?> getProfileUser(@AuthenticationPrincipal SignedUser signedUser) {
+        log.info("profileUserId: {}", signedUser);
         return new ResultResponse<>("프로파일 유저 정보", null);
     }
 
 
+    // 이건 뭔지 모름
     // AccountController.java
     @GetMapping("/whoami")
     public ResponseEntity<?> whoami(HttpServletRequest req, Authentication auth) {
