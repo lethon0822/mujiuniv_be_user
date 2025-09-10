@@ -72,21 +72,4 @@ public class AccountController {
         log.info("profileUserId: {}", signedUser);
         return new ResultResponse<>("프로파일 유저 정보", null);
     }
-
-
-    // 이건 뭔지 모름
-    // AccountController.java
-    @GetMapping("/whoami")
-    public ResponseEntity<?> whoami(HttpServletRequest req, Authentication auth) {
-        HttpSession s = req.getSession(false);
-        String sid = (s != null) ? s.getId() : "no-session";
-        if (auth == null || !auth.isAuthenticated()) {
-            return ResponseEntity.status(401).body(Map.of("sid", sid, "auth", "anonymous"));
-        }
-        return ResponseEntity.ok(Map.of(
-                "sid", sid,
-                "principal", auth.getName(),
-                "authorities", auth.getAuthorities().toString()
-        ));
-    }
 }

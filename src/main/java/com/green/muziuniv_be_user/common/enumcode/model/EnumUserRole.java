@@ -11,9 +11,9 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum EnumUserRole implements EnumMapperType {
-    STUDENT("01", "학생"),
-    PROFESSOR("02", "교수"),
-    STAFF("03", "직원")
+    STUDENT("student", "학생"),
+    PROFESSOR("professor", "교수"),
+    STAFF("staff", "직원")
 
     ;
 
