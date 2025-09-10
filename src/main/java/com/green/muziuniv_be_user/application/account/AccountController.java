@@ -1,7 +1,7 @@
 package com.green.muziuniv_be_user.application.account;
 
-
 import com.green.muziuniv_be_user.application.account.model.*;
+import com.green.muziuniv_be_user.application.account.privacyandpwd.model.PwdPutReq;
 import com.green.muziuniv_be_user.common.jwt.JwtTokenManager;
 import com.green.muziuniv_be_user.common.model.ResultResponse;
 import com.green.muziuniv_be_user.common.model.SignedUser;
@@ -28,7 +28,7 @@ public class AccountController {
 
     @PostMapping("/login")
     public ResultResponse<?> login(HttpServletResponse response,
-                                @RequestBody AccountLoginReq req) {
+                                   @RequestBody AccountLoginReq req) {
         AccountLoginDto result = accountService.login(req);
 
         //토큰 생성
@@ -71,6 +71,31 @@ public class AccountController {
     public ResultResponse<?> getProfileUser(@AuthenticationPrincipal SignedUser signedUser) {
         log.info("profileUserId: {}", signedUser);
         return new ResultResponse<>("프로파일 유저 정보", null);
+    }
+
+
+
+//    @GetMapping("/privacy")
+//    public ResponseEntity<?> selectPrivacy () {
+//        int userId = (int) HttpUtils.getSessionValue(req, "userId");
+//        PrivacyGetRes result = accountService.selectMyPrivacy(userId);
+//        return ResponseEntity.ok(result);
+//    }
+//
+//    @PutMapping("/privacy")
+//    public ResponseEntity<?> updatePrivacy ( @RequestBody PrivacyPutReq req) {
+//        int result = (int) HttpUtils.getSessionValue(httpReq, "userId");
+//        log.info("으어어어억{}", result);
+//        req.setUserId(result);
+//        log.info("세션에 저장된 userId={}", result);
+//        int result2 = accountService.updateMyPrivacy(req);
+//        return ResponseEntity.ok(result2);
+//    }
+
+    @PutMapping("/renewal")
+    public ResponseEntity<?> updatePwd (@RequestBody PwdPutReq req) {
+        int result = accountService.updateMyPwd(req);
+        return ResponseEntity.ok(result);
     }
 
 
