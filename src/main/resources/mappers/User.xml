@@ -15,7 +15,7 @@
     </select>
 
     <select id="findProByUserId">
-        SELECT u.user_id, u.login_id, u.user_name, d.dept_name
+        SELECT u.user_id, u.user_name, d.dept_name
         FROM user u
         JOIN professor p
         ON u.user_id = p.user_id

@@ -28,10 +28,10 @@ public class UserController {
     }
 
     @PostMapping("/professor")
-    public ResultResponse<?> getProInfo(@RequestParam Map<String, List<Long>> request){
+    public ResultResponse<?> getProInfo(@RequestBody Map<String, List<Long>> request){
         List<Long> userId = request.get("userId");
         List<ProGetRes> result = userService.ProInfoList(userId);
-        return new ResultResponse<>("교수정보" , null);
+        return new ResultResponse<>("교수정보" , result);
     }
 
 }
