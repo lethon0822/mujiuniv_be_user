@@ -24,14 +24,14 @@ public class UserController {
     public ResultResponse<?> getStudentInfo(@RequestBody Map<String, List<Long>> request) {
         List<Long> userId = request.get("userId");
         List<StudentGetRes> result = userService.studentInfoList(userId);
-        return new ResultResponse<>("susu", result);
+        return new ResultResponse<>("학생정보", result);
     }
 
     @PostMapping("/professor")
-    public ResultResponse<?> getProInfo(@RequestParam Map<String, List<Long>> request){
+    public ResultResponse<?> getProInfo(@RequestBody Map<String, List<Long>> request){
         List<Long> userId = request.get("userId");
         List<ProGetRes> result = userService.ProInfoList(userId);
-        return new ResultResponse<>("교수정보" , null);
+        return new ResultResponse<>("교수정보" , result);
     }
 
 }
