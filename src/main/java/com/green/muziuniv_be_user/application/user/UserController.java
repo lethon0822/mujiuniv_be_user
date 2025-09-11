@@ -34,4 +34,5 @@ public class UserController {
         return new ResultResponse<>("교수정보" , result);
     }
 
+
 }

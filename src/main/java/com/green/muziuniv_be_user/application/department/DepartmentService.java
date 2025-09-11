@@ -3,16 +3,19 @@ package com.green.muziuniv_be_user.application.department;
 
 
 import com.green.muziuniv_be_user.application.department.model.DepartmentPostReq;
+import com.green.muziuniv_be_user.application.department.model.DeptNameList;
 import com.green.muziuniv_be_user.entity.department.Department;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 
 @Service
 @RequiredArgsConstructor
 public class DepartmentService {
-    private DepartmentRepository departmentRepository;
-    //private DepartmentMapper departmentMapper;
+    private final DepartmentRepository departmentRepository;
+    private final DepartmentMapper departmentMapper;
 
 
 
@@ -24,6 +27,8 @@ public class DepartmentService {
 
     }
 
-
+    public List<DeptNameList> deptName(){
+        return departmentMapper.findDeptName();
+    }
 
 }
