@@ -24,7 +24,7 @@ public class UserController {
     public ResultResponse<?> getStudentInfo(@RequestBody Map<String, List<Long>> request) {
         List<Long> userId = request.get("userId");
         List<StudentGetRes> result = userService.studentInfoList(userId);
-        return new ResultResponse<>("susu", result);
+        return new ResultResponse<>("학생정보", result);
     }
 
     @PostMapping("/professor")
