@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.green.muziuniv_be_user.application.professor.ProfessorMapper">
+
+    <select id="findProfessorsWithDept">
+        SELECT
+            u.user_id AS professorId,
+            u.user_name AS professorName,
+            d.dept_name AS deptName
+
+        FROM professor p
+
+        JOIN user u
+        ON u.user_id = p.user_id
+        JOIN department d
+        ON d.dept_id = p.dept_id
+
+        WHERE p.user_id IN
+        <foreach item="id" collection="professorIds" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+
+</mapper>
