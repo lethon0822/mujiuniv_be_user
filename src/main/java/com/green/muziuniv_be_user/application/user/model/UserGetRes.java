@@ -1,9 +1,7 @@
 package com.green.muziuniv_be_user.application.user.model;
 
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.*;
 
 @Getter
 @ToString
