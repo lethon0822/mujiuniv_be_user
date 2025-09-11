@@ -1,8 +1,10 @@
 package com.green.muziuniv_be_user.common.model;
 
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
+import lombok.ToString;
 
-@RequiredArgsConstructor
+@AllArgsConstructor
+@ToString
 public class SignedUser {
     public final Long signedUserId;
 }

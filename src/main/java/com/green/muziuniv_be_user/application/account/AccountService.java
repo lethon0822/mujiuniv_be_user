@@ -20,9 +20,9 @@ public class AccountService {
 
    public AccountLoginDto login(AccountLoginReq req) {
       AccountLoginRes res = accountMapper.findByUserInfo(req);
-//      if(res == null || !passwordEncoder.matches(req.getPassword(), res.getPassword())) {
-//         throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "아이디/비밀번호를 확인해 주세요.");
-//      }
+      if(res == null || !passwordEncoder.matches(req.getPassword(), res.getPassword())) {
+         throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "아이디/비밀번호를 확인해 주세요.");
+      }
 
       // 보안상 노출 방지
       res.setPassword(null);

@@ -4,6 +4,7 @@ package com.green.muziuniv_be_user.application.account;
 import com.green.muziuniv_be_user.application.account.model.*;
 import com.green.muziuniv_be_user.common.jwt.JwtTokenManager;
 import com.green.muziuniv_be_user.common.model.ResultResponse;
+import com.green.muziuniv_be_user.common.model.SignedUser;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -12,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -35,7 +36,22 @@ public class AccountController {
         return new ResultResponse<>("로그인 성공", result.getAccountLoginRes());
     }
 
+    @PostMapping("/logout")
+    public ResultResponse<?> logout(HttpServletResponse response) {
+        jwtTokenManager.signOut(response);
 
+        return new ResultResponse<>("로그아웃 성공", null);
+    }
+
+    // accessToken 재발행
+    @PostMapping("/reissue")
+    public ResultResponse<?> reissue(HttpServletResponse response, HttpServletRequest request) {
+        jwtTokenManager.reissue(request, response);
+        return new ResultResponse<>("AccessToken 재발행 성공", null);
+    }
+
+
+    //아이디 찾기
     @GetMapping("/id")
     public ResponseEntity<?> findId (@ModelAttribute AccountFindIdReq req){
         AccountFindIdRes result = accountService.findIdByEmailAndPhone(req);
@@ -51,27 +67,9 @@ public class AccountController {
         return ResponseEntity.ok(Map.of("loginId", auth.getName()));
     }
 
-    @PostMapping("/logout")
-    public ResponseEntity<?> logout(HttpServletRequest req, HttpServletResponse res) {
-        // SecurityContext 비우기
-        SecurityContextHolder.clearContext();
-        // 세션 무효화
-        HttpSession s = req.getSession(false);
-        if (s != null) s.invalidate();
-        return ResponseEntity.ok().build();
-    }
-    // AccountController.java
-    @GetMapping("/whoami")
-    public ResponseEntity<?> whoami(HttpServletRequest req, Authentication auth) {
-        HttpSession s = req.getSession(false);
-        String sid = (s != null) ? s.getId() : "no-session";
-        if (auth == null || !auth.isAuthenticated()) {
-            return ResponseEntity.status(401).body(Map.of("sid", sid, "auth", "anonymous"));
-        }
-        return ResponseEntity.ok(Map.of(
-                "sid", sid,
-                "principal", auth.getName(),
-                "authorities", auth.getAuthorities().toString()
-        ));
+    @GetMapping("/profile")
+    public ResultResponse<?> getProfileUser(@AuthenticationPrincipal SignedUser signedUser) {
+        log.info("profileUserId: {}", signedUser);
+        return new ResultResponse<>("프로파일 유저 정보", null);
     }
 }

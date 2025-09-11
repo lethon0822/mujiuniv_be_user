@@ -1,7 +1,8 @@
-package com.green.muziuniv_be_user.common.config;
+package com.green.muziuniv_be_user.common.security;
 
 
 import com.green.muziuniv_be_user.common.constants.ConstJwt;
+import com.green.muziuniv_be_user.common.jwt.JwtTokenManager;
 import com.green.muziuniv_be_user.common.model.SignedUser;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -20,23 +21,23 @@ import java.io.IOException;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class UserHeaderAuthenticationFilter extends OncePerRequestFilter {
-
+public class TokenAuthenticationFilter extends OncePerRequestFilter {
+    private final JwtTokenManager jwtTokenManager;
     private final ConstJwt constJwt;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request,
-                                    HttpServletResponse response,
-                                    FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        log.info("request.getRequestURI(): {}", request.getRequestURI());
 
         String signedUserId = request.getHeader(constJwt.claimKey);
         log.info("signedUserId: {}", signedUserId);
 
         if (signedUserId != null) {
+            //UserPrincipal userPrincipal = objectMapper.readValue(signedUserJson, UserPrincipal.class);
             SignedUser signedUser = new SignedUser(Long.parseLong(signedUserId));
             Authentication auth = new UsernamePasswordAuthenticationToken(signedUser, null, null);
             SecurityContextHolder.getContext().setAuthentication(auth);
         }
-        filterChain.doFilter(request, response);
+        filterChain.doFilter(request, response); //다음 필터에게 req, res 넘기기
     }
 }

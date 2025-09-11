@@ -2,14 +2,14 @@ package com.green.muziuniv_be_user.entity.department;
 
 import com.green.muziuniv_be_user.entity.professor.Professor;
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 
 @Entity
 @Getter
-@Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode
 public class Department {
     @Id

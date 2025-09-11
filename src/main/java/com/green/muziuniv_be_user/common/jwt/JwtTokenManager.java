@@ -8,6 +8,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 //JWT 총괄 책임자
@@ -75,7 +77,7 @@ public class JwtTokenManager {
     public void reissue(HttpServletRequest request, HttpServletResponse response) {
         //request에서 refreshToken을 얻는다.
         String refreshToken = getRefreshTokenFromCookie(request);
-
+        log.info("먀먐{}", refreshToken);
         //refreshToken에서 jwtUser를 만든다.
         JwtUser jwtUser = getJwtUserFromToken(refreshToken);
 
@@ -90,4 +92,5 @@ public class JwtTokenManager {
         deleteAccessTokenInCookie(response);
         deleteRefreshTokenInCookie(response);
     }
+
 }
