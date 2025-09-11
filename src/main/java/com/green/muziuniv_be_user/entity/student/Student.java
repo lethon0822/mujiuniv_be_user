@@ -28,10 +28,10 @@ public class Student {
     @JoinColumn(name = "dept_id", nullable = false)
     private Department department;
 
-    @Column(nullable = false, length = 10)
+    @Column(nullable = false)
     private int grade;
 
-    @Column(nullable = false, length = 10)
+    @Column(nullable = false)
     private int semester;
 
     @Column(nullable = false)
