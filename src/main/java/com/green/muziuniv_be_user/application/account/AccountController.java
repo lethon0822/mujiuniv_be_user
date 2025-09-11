@@ -70,6 +70,7 @@ public class AccountController {
     @GetMapping("/profile")
     public ResultResponse<?> getProfileUser(@AuthenticationPrincipal SignedUser signedUser) {
         log.info("profileUserId: {}", signedUser);
+        
         return new ResultResponse<>("프로파일 유저 정보", null);
     }
 
