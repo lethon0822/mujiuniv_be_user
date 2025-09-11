@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/staff/department")
+@RequestMapping("/dept")
 @RequiredArgsConstructor
 @Slf4j
 public class DepartmentController {
@@ -28,8 +28,14 @@ public class DepartmentController {
         return new ResultResponse<>("학과 개설", null );
     }
 
+    @GetMapping("/list")
+    public ResultResponse<?> getDeptName(){
+        List<DeptNameList> result = departmentService.deptName();
+        return new ResultResponse<>("학과명", result);
+    }
+
     // 학과 조회
-    @GetMapping
+    @GetMapping("/{id}")
     public ResultResponse<?> findDepartment(@ModelAttribute DepartmentGetReq req){
         log.info("알이큐:{}",req);
         if (req.getStatus() == "null") {
