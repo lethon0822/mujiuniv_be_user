@@ -74,7 +74,6 @@ public class AccountController {
     }
 
 
-
 //    @GetMapping("/privacy")
 //    public ResponseEntity<?> selectPrivacy () {
 //        int userId = (int) HttpUtils.getSessionValue(req, "userId");
