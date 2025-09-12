@@ -1,7 +1,6 @@
-package com.green.muziuniv_be_user.common.model;
+package com.green.muziuniv_be_user.configuration.model;
 
 
-import com.green.muziuniv_be_user.common.enumcode.model.EnumUserRole;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;

@@ -3,7 +3,7 @@ package com.green.muziuniv_be_user.application.account;
 
 import com.green.muziuniv_be_user.application.account.model.*;
 import com.green.muziuniv_be_user.application.account.privacyandpwd.model.*;
-import com.green.muziuniv_be_user.common.model.JwtUser;
+import com.green.muziuniv_be_user.configuration.model.JwtUser;
 import com.green.muziuniv_be_user.openfeign.semester.SemesterClient;
 import com.green.muziuniv_be_user.openfeign.semester.model.SemesterDto;
 import lombok.RequiredArgsConstructor;
@@ -53,6 +53,7 @@ public class AccountService {
               .build();
    }
 
+   
 
    public String encodePassword(String rawPassword) {
       return passwordEncoder.encode(rawPassword);
@@ -82,8 +83,7 @@ public class AccountService {
    }
 
 
-
-   public PrivacyGetRes selectMyPrivacy(int loginId) {
+   public PrivacyGetRes selectMyPrivacy(long loginId) {
       return accountMapper.selectMyPrivacy(loginId);
    }
 

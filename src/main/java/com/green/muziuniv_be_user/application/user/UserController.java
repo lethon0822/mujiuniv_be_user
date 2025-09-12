@@ -3,8 +3,9 @@ package com.green.muziuniv_be_user.application.user;
 
 import com.green.muziuniv_be_user.application.user.model.ProGetRes;
 import com.green.muziuniv_be_user.application.user.model.StudentGetRes;
-import com.green.muziuniv_be_user.common.model.ResultResponse;
-import com.green.muziuniv_be_user.common.model.SignedUser;
+import com.green.muziuniv_be_user.application.user.model.UserGetRes;
+import com.green.muziuniv_be_user.configuration.model.ResultResponse;
+import com.green.muziuniv_be_user.configuration.model.SignedUser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -38,7 +39,9 @@ public class UserController {
     // 유저 프로필
     @GetMapping("/profile")
     public ResultResponse<?> getUserInfo(@AuthenticationPrincipal SignedUser signedUserId){
-        return new ResultResponse<>("유저정보", null);
+        UserGetRes result = userService.userInfoDto(signedUserId);
+
+        return new ResultResponse<>("유저정보", result.getLoginId() == null ? "해당사항없음" : result);
     }
 
 

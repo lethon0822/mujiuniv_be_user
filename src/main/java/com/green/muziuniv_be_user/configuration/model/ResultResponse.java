@@ -1,4 +1,4 @@
-package com.green.muziuniv_be_user.common.model;
+package com.green.muziuniv_be_user.configuration.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

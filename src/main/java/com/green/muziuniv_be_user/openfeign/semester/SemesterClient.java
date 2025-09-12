@@ -1,7 +1,7 @@
 package com.green.muziuniv_be_user.openfeign.semester;
 
 
-import com.green.muziuniv_be_user.common.util.FeignConfiguration;
+import com.green.muziuniv_be_user.configuration.util.FeignConfiguration;
 import com.green.muziuniv_be_user.openfeign.semester.model.SemesterDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;

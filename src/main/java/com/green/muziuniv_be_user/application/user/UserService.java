@@ -8,7 +8,7 @@ import com.green.muziuniv_be_user.application.user.Repository.UserRepository;
 import com.green.muziuniv_be_user.application.user.model.ProGetRes;
 import com.green.muziuniv_be_user.application.user.model.StudentGetRes;
 import com.green.muziuniv_be_user.application.user.model.UserGetRes;
-import com.green.muziuniv_be_user.common.model.SignedUser;
+import com.green.muziuniv_be_user.configuration.model.SignedUser;
 import com.green.muziuniv_be_user.entity.professor.Professor;
 import com.green.muziuniv_be_user.entity.student.Student;
 import com.green.muziuniv_be_user.entity.user.User;
@@ -38,21 +38,24 @@ public class UserService {
         return userMapper.findProByUserId(userId);
     }
 
-    //유저 프로필
+
     /**
-     * 클래스 또는 메서드 설명
-     *
-     * @param signedUser 현재 로그인한 사용자의 PK값
-     * @return UserGetRes 유저 정보를 담은 DTO
-     * ----- 부가설명 -----
-     * 1차적으로 User entity 정보를 가져옵니다
+     * 1차적으로 User entity 정보를 가져옵니다\n
      * changeUserDto는 분기처리 담당입니다 User 객체를 넘겨주면 userRole을 구분하여
      * studentInfo 또는 proInfo 메소드로 넘겨줍니다
      * 각 메소드에서 UserGetRes를 생성 후 userInfoDto 메소드로 넘어와 공통 정보를 이어서 넣은 후 반환합니다
+     *
+     * @param signedUser 현재 로그인한 사용자의 PK값
+     * @return UserGetRes 유저 정보를 담은 DTO
+     *
+     *
      */
     public UserGetRes userInfoDto(SignedUser signedUser){
         User user = userRepository.findById(signedUser.signedUserId)
                     .orElseThrow(() -> new RuntimeException("유저가 없습니다"));
+        if ("staff".equals(user.getUserRole())) {
+            return UserGetRes.builder().build();
+        }
 
         UserGetRes data = changeUserDto(user);
 
@@ -61,16 +64,13 @@ public class UserService {
                 .userName(user.getUserName())
                 .birthDate(user.getBirthDate().toString())
                 .email(user.getEmail())
-                .postcode(user.getAddress().getPostCode())
+                .postcode(user.getAddress().getPostcode())
                 .address(user.getAddress().getAddress())
-
+                .addDetail(user.getAddress().getAddDetail())
+                .phone(user.getPhone())
                 .build();
 
-
-
-
-
-        return null;
+        return finalUserInfo;
     }
 
     private UserGetRes studentInfo (Student student){

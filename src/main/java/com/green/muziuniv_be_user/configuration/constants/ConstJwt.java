@@ -1,4 +1,4 @@
-package com.green.muziuniv_be_user.common.constants;
+package com.green.muziuniv_be_user.configuration.constants;
 
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;

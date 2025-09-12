@@ -1,4 +1,4 @@
-package com.green.muziuniv_be_user.common.util;
+package com.green.muziuniv_be_user.configuration.util;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;

@@ -1,8 +1,8 @@
-package com.green.muziuniv_be_user.common.enumcode.model;
+package com.green.muziuniv_be_user.configuration.enumcode.model;
 
 
-import com.green.muziuniv_be_user.common.enumcode.AbstractEnumCodeConverter;
-import com.green.muziuniv_be_user.common.enumcode.EnumMapperType;
+import com.green.muziuniv_be_user.configuration.enumcode.AbstractEnumCodeConverter;
+import com.green.muziuniv_be_user.configuration.enumcode.EnumMapperType;
 import jakarta.persistence.Converter;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

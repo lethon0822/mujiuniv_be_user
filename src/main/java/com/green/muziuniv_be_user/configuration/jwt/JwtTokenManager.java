@@ -1,15 +1,13 @@
-package com.green.muziuniv_be_user.common.jwt;
+package com.green.muziuniv_be_user.configuration.jwt;
 
 
-import com.green.muziuniv_be_user.common.constants.ConstJwt;
-import com.green.muziuniv_be_user.common.model.JwtUser;
-import com.green.muziuniv_be_user.common.util.CookieUtils;
+import com.green.muziuniv_be_user.configuration.constants.ConstJwt;
+import com.green.muziuniv_be_user.configuration.model.JwtUser;
+import com.green.muziuniv_be_user.configuration.util.CookieUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 //JWT 총괄 책임자
