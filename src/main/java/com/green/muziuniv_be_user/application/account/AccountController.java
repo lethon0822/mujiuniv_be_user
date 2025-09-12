@@ -1,6 +1,8 @@
 package com.green.muziuniv_be_user.application.account;
 
 import com.green.muziuniv_be_user.application.account.model.*;
+import com.green.muziuniv_be_user.application.account.privacyandpwd.model.PrivacyGetRes;
+import com.green.muziuniv_be_user.application.account.privacyandpwd.model.PrivacyPutReq;
 import com.green.muziuniv_be_user.application.account.privacyandpwd.model.PwdPutReq;
 import com.green.muziuniv_be_user.common.jwt.JwtTokenManager;
 import com.green.muziuniv_be_user.common.model.ResultResponse;
@@ -75,25 +77,23 @@ public class AccountController {
     }
 
 
-//    @GetMapping("/privacy")
-//    public ResponseEntity<?> selectPrivacy () {
-//        int userId = (int) HttpUtils.getSessionValue(req, "userId");
-//        PrivacyGetRes result = accountService.selectMyPrivacy(userId);
-//        return ResponseEntity.ok(result);
-//    }
-//
-//    @PutMapping("/privacy")
-//    public ResponseEntity<?> updatePrivacy ( @RequestBody PrivacyPutReq req) {
-//        int result = (int) HttpUtils.getSessionValue(httpReq, "userId");
-//        log.info("으어어어억{}", result);
-//        req.setUserId(result);
-//        log.info("세션에 저장된 userId={}", result);
-//        int result2 = accountService.updateMyPrivacy(req);
-//        return ResponseEntity.ok(result2);
-//    }
+    @GetMapping("/privacy")
+    public ResponseEntity<?> selectPrivacy (@AuthenticationPrincipal SignedUser signedUser) {
+        PrivacyGetRes result = accountService.selectMyPrivacy(signedUser.signedUserId);
+        return ResponseEntity.ok(result);
+    }
+
+    @PutMapping("/privacy")
+    public ResponseEntity<?> updatePrivacy (@AuthenticationPrincipal SignedUser signedUser, @RequestBody PrivacyPutReq req) {
+        log.info("으어어어억{}", signedUser);
+        req.setUserId(signedUser.signedUserId);
+        log.info("세션에 저장된 userId={}", req.getUserId());
+        int result2 = accountService.updateMyPrivacy(req);
+        return ResponseEntity.ok(result2);
+    }
 
     @PutMapping("/renewal")
-    public ResponseEntity<?> updatePwd (@RequestBody PwdPutReq req) {
+    public ResponseEntity<?> updatePwd (@AuthenticationPrincipal SignedUser signedUser, @RequestBody PwdPutReq req) {
         int result = accountService.updateMyPwd(req);
         return ResponseEntity.ok(result);
     }

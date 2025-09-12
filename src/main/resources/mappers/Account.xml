@@ -16,6 +16,11 @@
 
     </select>
 
+    <select id="">
+
+
+    </select>
+
     <select id="selectMyPrivacy">
         SELECT login_id, user_name, address, phone, email, add_detail
         FROM user
