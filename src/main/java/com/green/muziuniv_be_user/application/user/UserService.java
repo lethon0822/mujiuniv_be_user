@@ -1,8 +1,17 @@
 package com.green.muziuniv_be_user.application.user;
 
 
+import com.green.muziuniv_be_user.application.department.DepartmentRepository;
+import com.green.muziuniv_be_user.application.user.Repository.ProfessorRepository;
+import com.green.muziuniv_be_user.application.user.Repository.StudentRepository;
+import com.green.muziuniv_be_user.application.user.Repository.UserRepository;
 import com.green.muziuniv_be_user.application.user.model.ProGetRes;
 import com.green.muziuniv_be_user.application.user.model.StudentGetRes;
+import com.green.muziuniv_be_user.application.user.model.UserGetRes;
+import com.green.muziuniv_be_user.common.model.SignedUser;
+import com.green.muziuniv_be_user.entity.professor.Professor;
+import com.green.muziuniv_be_user.entity.student.Student;
+import com.green.muziuniv_be_user.entity.user.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -14,12 +23,86 @@ import java.util.List;
 @Slf4j
 public class UserService {
     private final UserMapper userMapper;
+    private final UserRepository userRepository;
+    private final StudentRepository studentRepository;
+    private final ProfessorRepository professorRepository;
+    private final DepartmentRepository departmentRepository;
 
+    //통신용
     public List<StudentGetRes> studentInfoList(List<Long> userId){
         return userMapper.findStudentByUserId(userId);
     }
 
+    //통신용
     public List<ProGetRes> ProInfoList(List<Long> userId){
         return userMapper.findProByUserId(userId);
+    }
+
+    //유저 프로필
+    /**
+     * 클래스 또는 메서드 설명
+     *
+     * @param signedUser 현재 로그인한 사용자의 PK값
+     * @return UserGetRes 유저 정보를 담은 DTO
+     * ----- 부가설명 -----
+     * 1차적으로 User entity 정보를 가져옵니다
+     * changeUserDto는 분기처리 담당입니다 User 객체를 넘겨주면 userRole을 구분하여
+     * studentInfo 또는 proInfo 메소드로 넘겨줍니다
+     * 각 메소드에서 UserGetRes를 생성 후 userInfoDto 메소드로 넘어와 공통 정보를 이어서 넣은 후 반환합니다
+     */
+    public UserGetRes userInfoDto(SignedUser signedUser){
+        User user = userRepository.findById(signedUser.signedUserId)
+                    .orElseThrow(() -> new RuntimeException("유저가 없습니다"));
+
+        UserGetRes data = changeUserDto(user);
+
+        UserGetRes finalUserInfo = data.toBuilder()
+                .loginId(user.getLoginId())
+                .userName(user.getUserName())
+                .birthDate(user.getBirthDate().toString())
+                .email(user.getEmail())
+                .postcode(user.getAddress().getPostCode())
+                .address(user.getAddress().getAddress())
+
+                .build();
+
+
+
+
+
+        return null;
+    }
+
+    private UserGetRes studentInfo (Student student){
+        UserGetRes result = UserGetRes.builder()
+                .deptName(student.getDepartment().getDeptName())
+                .grade(student.getGrade())
+                .entDate(student.getEntDate().toString())
+                .semester(student.getSemester())
+                .status(student.getStatus())
+                .build();
+        return result;
+    }
+
+    private UserGetRes proInfo(Professor professor){
+        UserGetRes result = UserGetRes.builder()
+                .status(professor.getStatus())
+                .deptName(professor.getDepartment().getDeptName())
+                .hireDate(professor.getHireDate().toString())
+                .build();
+        return result;
+    }
+
+    private UserGetRes changeUserDto(User user){
+        if("student".equals(user.getUserRole())){
+            Student student = studentRepository.findById(user.getUserId())
+                    .orElseThrow(() -> new RuntimeException("학생 기록이 없습니다"));
+
+          return studentInfo(student);
+        }
+        Professor professor = professorRepository.findById(user.getUserId())
+                .orElseThrow(() -> new RuntimeException("교수 기록이 없습니다"));
+
+        return proInfo(professor);
     }
 }
