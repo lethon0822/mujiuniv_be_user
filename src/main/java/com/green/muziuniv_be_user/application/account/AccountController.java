@@ -1,6 +1,8 @@
 package com.green.muziuniv_be_user.application.account;
 
 import com.green.muziuniv_be_user.application.account.model.*;
+import com.green.muziuniv_be_user.application.account.privacyandpwd.model.PrivacyGetRes;
+import com.green.muziuniv_be_user.application.account.privacyandpwd.model.PrivacyPutReq;
 import com.green.muziuniv_be_user.application.account.privacyandpwd.model.PwdPutReq;
 import com.green.muziuniv_be_user.common.jwt.JwtTokenManager;
 import com.green.muziuniv_be_user.common.model.ResultResponse;
@@ -50,7 +52,6 @@ public class AccountController {
         return new ResultResponse<>("AccessToken 재발행 성공", null);
     }
 
-
     //아이디 찾기
     @GetMapping("/id")
     public ResponseEntity<?> findId (@ModelAttribute AccountFindIdReq req){
@@ -70,29 +71,29 @@ public class AccountController {
     @GetMapping("/profile")
     public ResultResponse<?> getProfileUser(@AuthenticationPrincipal SignedUser signedUser) {
         log.info("profileUserId: {}", signedUser);
+        
         return new ResultResponse<>("프로파일 유저 정보", null);
     }
 
+    // 개인정보 조회(주소)
+    @GetMapping("/privacy")
+    public ResponseEntity<?> selectPrivacy (@AuthenticationPrincipal SignedUser signedUser) {
+        PrivacyGetRes result = accountService.selectMyPrivacy(signedUser.signedUserId);
+        return ResponseEntity.ok(result);
+    }
 
-//    @GetMapping("/privacy")
-//    public ResponseEntity<?> selectPrivacy () {
-//        int userId = (int) HttpUtils.getSessionValue(req, "userId");
-//        PrivacyGetRes result = accountService.selectMyPrivacy(userId);
-//        return ResponseEntity.ok(result);
-//    }
-//
-//    @PutMapping("/privacy")
-//    public ResponseEntity<?> updatePrivacy ( @RequestBody PrivacyPutReq req) {
-//        int result = (int) HttpUtils.getSessionValue(httpReq, "userId");
-//        log.info("으어어어억{}", result);
-//        req.setUserId(result);
-//        log.info("세션에 저장된 userId={}", result);
-//        int result2 = accountService.updateMyPrivacy(req);
-//        return ResponseEntity.ok(result2);
-//    }
+    // 개인정보 변경
+    @PutMapping("/privacy")
+    public ResponseEntity<?> updatePrivacy (@AuthenticationPrincipal SignedUser signedUser, @RequestBody PrivacyPutReq req) {
+        req.setUserId(signedUser.signedUserId);
+        log.info("세션에 저장된 userId={}", req.getUserId());
+        int result = accountService.updateMyPrivacy(req);
+        return ResponseEntity.ok(result);
+    }
 
+    // 비밀번호 변경
     @PutMapping("/renewal")
-    public ResponseEntity<?> updatePwd (@RequestBody PwdPutReq req) {
+    public ResponseEntity<?> updatePwd (@AuthenticationPrincipal SignedUser signedUser, @RequestBody PwdPutReq req) {
         int result = accountService.updateMyPwd(req);
         return ResponseEntity.ok(result);
     }

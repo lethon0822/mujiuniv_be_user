@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
-@RequestMapping("/api/account")
+@RequestMapping("/account")
 public class AuthController {
     private final AuthService authService;
 
