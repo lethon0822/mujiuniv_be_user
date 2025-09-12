@@ -1,10 +1,10 @@
-package com.green.muziuniv_be_user.common.jwt;
+package com.green.muziuniv_be_user.configuration.jwt;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import com.green.muziuniv_be_user.common.constants.ConstJwt;
-import com.green.muziuniv_be_user.common.model.JwtUser;
+import com.green.muziuniv_be_user.configuration.constants.ConstJwt;
+import com.green.muziuniv_be_user.configuration.model.JwtUser;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;

@@ -3,11 +3,10 @@ package com.green.muziuniv_be_user.application.department;
 
 
 import com.green.muziuniv_be_user.application.department.model.*;
-import com.green.muziuniv_be_user.common.model.ResultResponse;
+import com.green.muziuniv_be_user.configuration.model.ResultResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

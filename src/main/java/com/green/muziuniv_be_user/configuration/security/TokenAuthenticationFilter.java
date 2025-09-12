@@ -1,9 +1,9 @@
-package com.green.muziuniv_be_user.common.security;
+package com.green.muziuniv_be_user.configuration.security;
 
 
-import com.green.muziuniv_be_user.common.constants.ConstJwt;
-import com.green.muziuniv_be_user.common.jwt.JwtTokenManager;
-import com.green.muziuniv_be_user.common.model.SignedUser;
+import com.green.muziuniv_be_user.configuration.constants.ConstJwt;
+import com.green.muziuniv_be_user.configuration.jwt.JwtTokenManager;
+import com.green.muziuniv_be_user.configuration.model.SignedUser;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

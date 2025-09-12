@@ -1,4 +1,4 @@
-package com.green.muziuniv_be_user.common.enumcode;
+package com.green.muziuniv_be_user.configuration.enumcode;
 
 import java.util.Arrays;
 import java.util.LinkedHashMap;
