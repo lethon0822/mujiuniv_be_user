@@ -3,6 +3,7 @@ package com.green.muziuniv_be_user.entity.student;
 import com.green.muziuniv_be_user.entity.department.Department;
 import com.green.muziuniv_be_user.entity.user.User;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -49,5 +50,4 @@ public class Student {
     @Column(nullable = false, length = 10)
     private int geCredit = 0;
 
-
-}
+ }

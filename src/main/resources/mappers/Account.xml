@@ -10,10 +10,31 @@
         LEFT JOIN professor p ON u.user_id = p.user_id
         LEFT JOIN staff sf ON u.user_id = sf.user_id
         LEFT JOIN department d ON d.dept_id = COALESCE(s.dept_id, p.dept_id)
-        <where>
-            u.login_id = #{loginId}
-        </where>
+        WHERE u.login_id = #{loginId}
 
     </select>
+
+    <select id="selectMyPrivacy">
+        SELECT login_id, user_name, address, phone, email, add_detail
+        FROM user
+        WHERE user_id = #{userId}
+    </select>
+
+    <update id="updateMyPrivacy">
+        UPDATE user
+        <set>
+            <if test="address != null and address != ''" >address = #{address},</if>
+            <if test="addDetail != null and addDetail != ''">add_detail = #{addDetail},</if>
+            <if test="phone != null and phone != ''">phone = #{phone},</if>
+            <if test="email != null and email != ''"> email = #{email},</if>
+        </set>
+        WHERE user_id = #{userId}
+    </update>
+
+    <update id="updateMyPwd">
+        UPDATE user
+        SET password = #{password}
+        WHERE email = #{email}
+    </update>
 </mapper>
 
