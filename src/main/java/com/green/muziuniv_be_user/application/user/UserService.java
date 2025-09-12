@@ -39,13 +39,35 @@ public class UserService {
     }
 
     //유저 프로필
+    /**
+     * 클래스 또는 메서드 설명
+     *
+     * @param signedUser 현재 로그인한 사용자의 PK값
+     * @return UserGetRes 유저 정보를 담은 DTO
+     * ----- 부가설명 -----
+     * 1차적으로 User entity 정보를 가져옵니다
+     * changeUserDto는 분기처리 담당입니다 User 객체를 넘겨주면 userRole을 구분하여
+     * studentInfo 또는 proInfo 메소드로 넘겨줍니다
+     * 각 메소드에서 UserGetRes를 생성 후 userInfoDto 메소드로 넘어와 공통 정보를 이어서 넣은 후 반환합니다
+     */
     public UserGetRes userInfoDto(SignedUser signedUser){
         User user = userRepository.findById(signedUser.signedUserId)
                     .orElseThrow(() -> new RuntimeException("유저가 없습니다"));
 
-        UserGetRes result = changeUserDto(user);
+        UserGetRes data = changeUserDto(user);
 
-        //ToDO: 유정정보 넣기
+        UserGetRes finalUserInfo = data.toBuilder()
+                .loginId(user.getLoginId())
+                .userName(user.getUserName())
+                .birthDate(user.getBirthDate().toString())
+                .email(user.getEmail())
+                .postcode(user.getAddress().getPostCode())
+                .address(user.getAddress().getAddress())
+
+                .build();
+
+
+
 
 
         return null;
@@ -72,7 +94,7 @@ public class UserService {
     }
 
     private UserGetRes changeUserDto(User user){
-        if(user.getUserRole() == "student"){
+        if("student".equals(user.getUserRole())){
             Student student = studentRepository.findById(user.getUserId())
                     .orElseThrow(() -> new RuntimeException("학생 기록이 없습니다"));
 

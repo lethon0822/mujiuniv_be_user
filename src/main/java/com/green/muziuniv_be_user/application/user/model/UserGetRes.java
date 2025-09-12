@@ -5,7 +5,7 @@ import lombok.*;
 
 @Getter
 @ToString
-@Builder
+@Builder(toBuilder = true)
 public class UserGetRes {
     private String loginId;
     private String userName;
