@@ -37,7 +37,7 @@ dependencyManagement {
 dependencies {
     // openFeign
     // https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-openfeign
-    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign:4.3.0'
 
     //jwt
     // https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-impl
@@ -81,11 +81,10 @@ dependencies {
     // --- Spring ---
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
-    implementation 'org.springframework.boot:spring-boot-starter-validation'   // ← 추가 (DTO @Valid 등)
 
     // --- MyBatis ---
-    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.4'
-    testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.4'
+    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.5'
+    testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.5'
 
     // --- DB Driver (MariaDB 사용) ---
     runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'

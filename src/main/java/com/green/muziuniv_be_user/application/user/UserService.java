@@ -8,7 +8,7 @@ import com.green.muziuniv_be_user.application.user.Repository.UserRepository;
 import com.green.muziuniv_be_user.application.user.model.ProGetRes;
 import com.green.muziuniv_be_user.application.user.model.StudentGetRes;
 import com.green.muziuniv_be_user.application.user.model.UserGetRes;
-import com.green.muziuniv_be_user.common.model.SignedUser;
+import com.green.muziuniv_be_user.configuration.model.SignedUser;
 import com.green.muziuniv_be_user.entity.professor.Professor;
 import com.green.muziuniv_be_user.entity.student.Student;
 import com.green.muziuniv_be_user.entity.user.User;

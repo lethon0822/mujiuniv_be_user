@@ -1,4 +1,4 @@
-package com.green.muziuniv_be_user.common.enumcode;
+package com.green.muziuniv_be_user.configuration.enumcode;
 
 import io.micrometer.common.util.StringUtils;
 import jakarta.persistence.AttributeConverter;

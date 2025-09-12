@@ -1,4 +1,4 @@
-package com.green.muziuniv_be_user.common.enumcode;
+package com.green.muziuniv_be_user.configuration.enumcode;
 
 import lombok.Getter;
 import lombok.ToString;

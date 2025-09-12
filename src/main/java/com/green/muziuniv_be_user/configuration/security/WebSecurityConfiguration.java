@@ -1,4 +1,4 @@
-package com.green.muziuniv_be_user.common.security;
+package com.green.muziuniv_be_user.configuration.security;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

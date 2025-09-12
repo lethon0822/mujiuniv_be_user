@@ -1,7 +1,7 @@
 package com.green.muziuniv_be_user.application.account.model;
 
 
-import com.green.muziuniv_be_user.common.model.JwtUser;
+import com.green.muziuniv_be_user.configuration.model.JwtUser;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
