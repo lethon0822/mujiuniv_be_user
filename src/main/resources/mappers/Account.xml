@@ -14,8 +14,13 @@
 
     </select>
 
+    <select id="">
+
+
+    </select>
+
     <select id="selectMyPrivacy">
-        SELECT login_id, user_name, address, phone, email, add_detail
+        SELECT login_id, user_name, address, phone, email, add_detail, postcode
         FROM user
         WHERE user_id = #{userId}
     </select>
@@ -27,6 +32,7 @@
             <if test="addDetail != null and addDetail != ''">add_detail = #{addDetail},</if>
             <if test="phone != null and phone != ''">phone = #{phone},</if>
             <if test="email != null and email != ''"> email = #{email},</if>
+            <if test="postcode != null and postcode != ''"> postcode = #{postcode},</if>
         </set>
         WHERE user_id = #{userId}
     </update>

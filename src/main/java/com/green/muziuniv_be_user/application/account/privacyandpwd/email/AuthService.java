@@ -66,19 +66,15 @@ public class AuthService {
             // 이러한 경우 MessagingException이 발생
             e.printStackTrace();//e.printStackTrace()는 예외를 기본 오류 스트림에 출력하는 메서드
         }
-        redisUtil.setDataExpire(Integer.toString(authCodeNumber),toMail,60*5000);
+        redisUtil.setDataExpire(toMail, Integer.toString(authCodeNumber), 60*5);
     }
     public boolean checkAll(String email,String authCode){
-        System.out.println(authCode);
-        System.out.println(email);
-        if(redisUtil.getData(authCode)==null){
+        String savedCode = redisUtil.getData(email);
+        log.info("Redis 조회 => key(email): {}, value(savedCode): {}", email, savedCode);
+
+        if (savedCode == null) {
             return false;
         }
-        else if(redisUtil.getData(email).equals(email) && redisUtil.getData(authCode).equals(authCode)){
-            return true;
-        }
-        else{
-            return false;
-        }
+        return savedCode.equals(authCode);
     }
 }

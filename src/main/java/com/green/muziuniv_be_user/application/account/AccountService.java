@@ -53,6 +53,7 @@ public class AccountService {
               .build();
    }
 
+   
 
    public String encodePassword(String rawPassword) {
       return passwordEncoder.encode(rawPassword);
@@ -82,8 +83,7 @@ public class AccountService {
    }
 
 
-
-   public PrivacyGetRes selectMyPrivacy(int loginId) {
+   public PrivacyGetRes selectMyPrivacy(long loginId) {
       return accountMapper.selectMyPrivacy(loginId);
    }
 
