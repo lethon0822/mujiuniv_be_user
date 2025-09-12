@@ -52,7 +52,6 @@ public class AccountController {
         return new ResultResponse<>("AccessToken 재발행 성공", null);
     }
 
-
     //아이디 찾기
     @GetMapping("/id")
     public ResponseEntity<?> findId (@ModelAttribute AccountFindIdReq req){
@@ -76,22 +75,23 @@ public class AccountController {
         return new ResultResponse<>("프로파일 유저 정보", null);
     }
 
-
+    // 개인정보 조회(주소)
     @GetMapping("/privacy")
     public ResponseEntity<?> selectPrivacy (@AuthenticationPrincipal SignedUser signedUser) {
         PrivacyGetRes result = accountService.selectMyPrivacy(signedUser.signedUserId);
         return ResponseEntity.ok(result);
     }
 
+    // 개인정보 변경
     @PutMapping("/privacy")
     public ResponseEntity<?> updatePrivacy (@AuthenticationPrincipal SignedUser signedUser, @RequestBody PrivacyPutReq req) {
-        log.info("으어어어억{}", signedUser);
         req.setUserId(signedUser.signedUserId);
         log.info("세션에 저장된 userId={}", req.getUserId());
-        int result2 = accountService.updateMyPrivacy(req);
-        return ResponseEntity.ok(result2);
+        int result = accountService.updateMyPrivacy(req);
+        return ResponseEntity.ok(result);
     }
 
+    // 비밀번호 변경
     @PutMapping("/renewal")
     public ResponseEntity<?> updatePwd (@AuthenticationPrincipal SignedUser signedUser, @RequestBody PwdPutReq req) {
         int result = accountService.updateMyPwd(req);

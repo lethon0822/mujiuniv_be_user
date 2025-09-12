@@ -12,4 +12,5 @@ public class PrivacyGetRes {
     private String phone;
     private String email;
     private String addDetail;
+    private String postcode;
 }
