@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.green.muziuniv_be_user.application.user.UserMapper">
+    <select id="findStudentByUserId">
+        SELECT u.user_id, u.login_id, u.user_name, s.grade, d.dept_name
+        FROM user u
+        JOIN student s
+          ON u.user_id = s.user_id
+        JOIN department d
+          ON s.dept_id = d.dept_id
+        WHERE u.user_id IN
+        <foreach collection="userId" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+
+    <select id="findProByUserId">
+        SELECT u.user_id, u.user_name, d.dept_name
+        FROM user u
+        JOIN professor p
+        ON u.user_id = p.user_id
+        JOIN department d
+        ON p.dept_id = d.dept_id
+        WHERE u.user_id IN
+        <foreach collection="userId" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+
+
+</mapper>

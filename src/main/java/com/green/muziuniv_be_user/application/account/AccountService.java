@@ -4,6 +4,8 @@ package com.green.muziuniv_be_user.application.account;
 import com.green.muziuniv_be_user.application.account.model.*;
 import com.green.muziuniv_be_user.application.account.privacyandpwd.model.*;
 import com.green.muziuniv_be_user.common.model.JwtUser;
+import com.green.muziuniv_be_user.openfeign.semester.SemesterClient;
+import com.green.muziuniv_be_user.openfeign.semester.model.SemesterDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.mindrot.jbcrypt.BCrypt;
@@ -13,19 +15,35 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDate;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class AccountService {
    private final PasswordEncoder passwordEncoder;
    private final AccountMapper accountMapper;
-   // private final SemesterClient semesterClient;
+   private final SemesterClient semesterClient;
 
    public AccountLoginDto login(AccountLoginReq req) {
       AccountLoginRes res = accountMapper.findByUserInfo(req);
       if(res == null || !passwordEncoder.matches(req.getPassword(), res.getPassword())) {
          throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "아이디/비밀번호를 확인해 주세요.");
       }
+
+      //현재 연도
+      int year = LocalDate.now().getYear();
+      int month = LocalDate.now().getMonthValue();
+
+      int semester = switch (month){
+         case 1,2,3,4,5,6 -> 1;
+         case 7,8,9,10,11,12 -> 2;
+         default -> throw new IllegalStateException("잘못된 월: " + month);
+      };
+
+      int semesterId = nowSemester();
+      res.setSemesterId(semesterId);
+
 
       // 보안상 노출 방지
       res.setPassword(null);
@@ -34,7 +52,6 @@ public class AccountService {
               .jwtUser(new JwtUser(res.getUserId(), res.getUserRole()))
               .build();
    }
-
 
 
    public String encodePassword(String rawPassword) {
@@ -65,6 +82,7 @@ public class AccountService {
    }
 
 
+
    public PrivacyGetRes selectMyPrivacy(int loginId) {
       return accountMapper.selectMyPrivacy(loginId);
    }
@@ -91,6 +109,21 @@ public class AccountService {
       log.info("업데이트 결과 건수: {}", updateCount);
 
       return updateCount;
+   }
+
+
+   public int nowSemester(){
+      int year = LocalDate.now().getYear();
+
+      int month = LocalDate.now().getMonthValue();
+      int semester = switch (month){
+         case 1,2,3,4,5,6 -> 1;
+         case 7,8,9,10,11,12 -> 2;
+         default -> throw new IllegalStateException("잘못된 월: " + month);
+      };
+      SemesterDto result = semesterClient.getSemesterId(year,semester);
+
+      return result.getSemesterId();
    }
 
 }
