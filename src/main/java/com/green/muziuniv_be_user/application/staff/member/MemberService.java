@@ -1,7 +1,7 @@
-package com.green.muziuniv_be_user.staff.member;
+package com.green.muziuniv_be_user.application.staff.member;
 
-import com.green.muziuniv_be_user.staff.member.model.MemberGetReq;
-import com.green.muziuniv_be_user.staff.member.model.MemberGetRes;
+import com.green.muziuniv_be_user.application.staff.member.model.MemberGetReq;
+import com.green.muziuniv_be_user.application.staff.member.model.MemberGetRes;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

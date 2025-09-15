@@ -1,4 +1,4 @@
-package com.green.muziuniv_be_user.staff.member.model;
+package com.green.muziuniv_be_user.application.staff.member.model;
 
 
 import lombok.Getter;

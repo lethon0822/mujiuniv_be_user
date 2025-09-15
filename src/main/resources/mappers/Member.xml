@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.green.muziuniv_be_user.staff.member.MemberMapper">
+<mapper namespace="com.green.muziuniv_be_user.application.staff.member.MemberMapper">
 
     <!-- MemberGetReq 의 필드명이 userRole, deptId, status, grade, gender, searchBy, q 라고 가정 -->
     <select id="findUser">
@@ -80,4 +80,5 @@
 
         </choose>
     </select>
+
 </mapper>
