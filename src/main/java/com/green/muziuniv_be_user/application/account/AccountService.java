@@ -31,19 +31,8 @@ public class AccountService {
          throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "아이디/비밀번호를 확인해 주세요.");
       }
 
-      //현재 연도
-      int year = LocalDate.now().getYear();
-      int month = LocalDate.now().getMonthValue();
-
-      int semester = switch (month){
-         case 1,2,3,4,5,6 -> 1;
-         case 7,8,9,10,11,12 -> 2;
-         default -> throw new IllegalStateException("잘못된 월: " + month);
-      };
-
       int semesterId = nowSemester();
       res.setSemesterId(semesterId);
-
 
       // 보안상 노출 방지
       res.setPassword(null);
@@ -112,7 +101,10 @@ public class AccountService {
    }
 
 
-   public int nowSemester(){
+   /**
+    * 현재 학기 가져오는 메소드(서버 투 서버 통신)
+    * */
+   private int nowSemester(){
       int year = LocalDate.now().getYear();
 
       int month = LocalDate.now().getMonthValue();

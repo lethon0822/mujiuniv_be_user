@@ -6,10 +6,10 @@ import lombok.Getter;
 
 public class DepartmentPatchReq {
     private String status = "0";
-    private int deptId;
+    private Long deptId;
 
 
-    public DepartmentPatchReq(int deptId){
+    public DepartmentPatchReq(Long deptId){
         this.deptId = deptId;
     }
 }

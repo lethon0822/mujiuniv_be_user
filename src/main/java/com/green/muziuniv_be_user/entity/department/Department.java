@@ -3,14 +3,17 @@ package com.green.muziuniv_be_user.entity.department;
 import com.green.muziuniv_be_user.entity.professor.Professor;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.DynamicUpdate;
 
 
 @Entity
 @Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
+@DynamicUpdate
 public class Department {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,6 +40,13 @@ public class Department {
 
     @Column(nullable = false, length = 50, unique = true)
     private String deptCode;
+
+    @PrePersist
+    public void prePersist() {
+        if (this.status == null) {
+            this.status = "1";
+        }
+    }
 
 }
 

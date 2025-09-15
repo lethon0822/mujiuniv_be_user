@@ -23,8 +23,9 @@ public class DepartmentPostReq {
 
     @Min(300)
     @Max(450)
-    private String deptMaxStd;
+    private int deptMaxStd;
 
     @NotNull(message = "학과 코드는 필수입니다")
+    @Pattern(regexp = "^[A-Z]{4}$", message = "학과 코드 형식이 올바르지 않습니다.")
     private String deptCode;
 }
