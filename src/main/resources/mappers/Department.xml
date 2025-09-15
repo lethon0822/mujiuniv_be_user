@@ -7,7 +7,49 @@
         FROM department
     </select>
 
+    <select id="findDeptCode">
+        SELECT count(dept_code)
+        FROM department
+        WHERE dept_code = #{deptCode}
+    </select>
 
+    <select id="findUserByDeptId">
+        SELECT u.user_id, u.user_name
+        FROM user u
+        JOIN professor p
+        ON u.user_id = p.user_id
+        WHERE p.dept_id = #{deptId}
+    </select>
+
+    <select id="findAll">
+        SELECT
+        d.dept_id,
+        d.dept_name,
+        d.dept_office,
+        d.dept_tel,
+        d.head_prof_id,
+        d.dept_max_std,
+        d.status,
+        d.dept_code,
+        u.user_name,
+        IFNULL(s.deptPeople, 0) AS deptPeople
+        FROM department d
+        LEFT JOIN user u ON d.head_prof_id = u.user_id
+        LEFT JOIN (
+        SELECT dept_id, COUNT(*) AS deptPeople
+        FROM student
+        WHERE status != '졸업'
+        GROUP BY dept_id
+        ) s ON d.dept_id = s.dept_id;
+        <where>
+            <if test="status != null and status != ''">
+                d.status = #{status}
+            </if>
+            <if test="keyword != null and keyword != ''">
+                AND (d.dept_code LIKE '%${keyword}%' OR d.dept_name LIKE '%${keyword}%')
+            </if>
+        </where>
+    </select>
 
 </mapper>
 

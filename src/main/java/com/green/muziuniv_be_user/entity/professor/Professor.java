@@ -3,15 +3,15 @@ package com.green.muziuniv_be_user.entity.professor;
 import com.green.muziuniv_be_user.entity.department.Department;
 import com.green.muziuniv_be_user.entity.user.User;
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.time.LocalDate;
 @Entity
 @Getter
-@Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode
 public class Professor {
     @Id
