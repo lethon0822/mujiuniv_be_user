@@ -17,8 +17,6 @@ public interface AccountMapper {
 
     AccountFindIdRes findIdByEmailAndPhone(AccountFindIdReq req);
 
-    String findDeptCodeByUserId(long userId);
-
     PrivacyGetRes selectMyPrivacy(long userId);
 
     int updateMyPrivacy(PrivacyPutReq req);
