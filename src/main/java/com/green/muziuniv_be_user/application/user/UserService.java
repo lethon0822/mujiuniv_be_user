@@ -1,15 +1,11 @@
 package com.green.muziuniv_be_user.application.user;
 
 
-import com.green.muziuniv_be_user.application.staff.member.MemberMapper;
-import com.green.muziuniv_be_user.application.user.model.MemberGetReq;
-import com.green.muziuniv_be_user.application.user.model.MemberGetRes;
+
+import com.green.muziuniv_be_user.application.user.model.*;
 import com.green.muziuniv_be_user.application.user.Repository.ProfessorRepository;
 import com.green.muziuniv_be_user.application.user.Repository.StudentRepository;
 import com.green.muziuniv_be_user.application.user.Repository.UserRepository;
-import com.green.muziuniv_be_user.application.user.model.ProGetDto;
-import com.green.muziuniv_be_user.application.user.model.StudentGetDto;
-import com.green.muziuniv_be_user.application.user.model.UserGetRes;
 import com.green.muziuniv_be_user.configuration.model.SignedUser;
 import com.green.muziuniv_be_user.entity.professor.Professor;
 import com.green.muziuniv_be_user.entity.student.Student;
