@@ -1,7 +1,9 @@
 package com.green.muziuniv_be_user.application.user;
 
 
-import com.green.muziuniv_be_user.application.department.DepartmentRepository;
+import com.green.muziuniv_be_user.application.staff.member.MemberMapper;
+import com.green.muziuniv_be_user.application.user.model.MemberGetReq;
+import com.green.muziuniv_be_user.application.user.model.MemberGetRes;
 import com.green.muziuniv_be_user.application.user.Repository.ProfessorRepository;
 import com.green.muziuniv_be_user.application.user.Repository.StudentRepository;
 import com.green.muziuniv_be_user.application.user.Repository.UserRepository;
@@ -26,7 +28,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final StudentRepository studentRepository;
     private final ProfessorRepository professorRepository;
-    private final DepartmentRepository departmentRepository;
+
 
     //통신용
     public List<StudentGetDto> studentInfoList(List<Long> userId){
@@ -36,6 +38,13 @@ public class UserService {
     //통신용
     public List<ProGetDto> ProInfoList(List<Long> userId){
         return userMapper.findProByUserId(userId);
+    }
+
+    // 유저 목록 조회용(staff 기능)
+
+
+    public List<MemberGetRes> findUser(MemberGetReq req){
+        return userMapper.findUser(req);
     }
 
 
@@ -105,4 +114,5 @@ public class UserService {
 
         return proInfo(professor);
     }
-}
+
+    }

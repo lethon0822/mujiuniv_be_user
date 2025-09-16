@@ -1,6 +1,7 @@
 package com.green.muziuniv_be_user.application.user;
 
 
+import com.green.muziuniv_be_user.application.user.model.MemberGetReq;
 import com.green.muziuniv_be_user.application.user.model.ProGetDto;
 import com.green.muziuniv_be_user.application.user.model.StudentGetDto;
 import com.green.muziuniv_be_user.application.user.model.UserGetRes;
@@ -8,6 +9,7 @@ import com.green.muziuniv_be_user.configuration.model.ResultResponse;
 import com.green.muziuniv_be_user.configuration.model.SignedUser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +22,7 @@ import java.util.Map;
 @RequestMapping("/user")
 public class UserController {
     private final UserService userService;
+
 
     // 통신용
     @PostMapping("/student")
@@ -44,5 +47,10 @@ public class UserController {
         return new ResultResponse<>("유저정보", result.getLoginId() == null ? "해당사항없음" : result);
     }
 
+    //  추후 User 폴더 생성시 이 파일의 내용은 user로 이동
+    @GetMapping("/list")
+    public ResponseEntity<?> getMember(@ModelAttribute MemberGetReq req) {
+        return ResponseEntity.ok(userService.findUser(req));
+    }
 
 }
