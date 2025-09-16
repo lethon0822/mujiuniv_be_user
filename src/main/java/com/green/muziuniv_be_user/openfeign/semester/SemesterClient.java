@@ -11,5 +11,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface SemesterClient {
     @GetMapping("/api/semester/find")
     SemesterDto getSemesterId(@RequestParam(name = "year")Integer year
-            , @RequestParam(name = "semester") Integer semester );
+            , @RequestParam(name = "semester") Integer semester
+            , @RequestParam(name = "schedule_type" ) String scheduleType);
 }

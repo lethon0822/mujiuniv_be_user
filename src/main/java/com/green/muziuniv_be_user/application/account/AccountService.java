@@ -132,7 +132,8 @@ public class AccountService {
          case 7,8,9,10,11,12 -> 2;
          default -> throw new IllegalStateException("잘못된 월: " + month);
       };
-      SemesterDto result = semesterClient.getSemesterId(year,semester);
+      String scheduleType=""; //TODO: 어케든해봐라
+      SemesterDto result = semesterClient.getSemesterId(year,semester, scheduleType);
 
       return result.getSemesterId();
    }

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.green.muziuniv_be_user.application.staff.ApprovalMapper">
+    <select id="ApplicationList">
+        SELECT a.app_id, a.created_at, a.status, a.reason,
+        u.user_id, u.user_name, d.dept_name, sc.schedule_type, sm.year, sm.semester
+        FROM application a
+        JOIN user u
+        ON a.user_id = u.user_id
+        left JOIN professor p
+        ON u.user_id = p.user_id
+        left JOIN student s
+        ON s.user_id = u.user_id
+        JOIN department d
+        ON d.dept_id = s.dept_id
+        OR d.dept_id = p.dept_id
+        JOIN schedule sc
+        ON a.schedule_id = sc.schedule_id
+        JOIN semester sm
+        ON sc.semester_id = sm.semester_id
+        WHERE sm.year = #{year} AND sm.semester = #{semester}
+        <if test="scheduleType != null and scheduleType != ''">
+            AND sc.schedule_type = #{scheduleType}
+        </if>
+    </select>
+
+</mapper>
