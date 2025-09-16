@@ -2,7 +2,7 @@ package com.green.muziuniv_be_user.application.user;
 
 
 import com.green.muziuniv_be_user.application.user.model.MemberGetReq;
-import com.green.muziuniv_be_user.application.user.model.ProGetDto;
+import com.green.muziuniv_be_user.application.user.model.UserInfoGetDto;
 import com.green.muziuniv_be_user.application.user.model.StudentGetDto;
 import com.green.muziuniv_be_user.application.user.model.UserGetRes;
 import com.green.muziuniv_be_user.configuration.model.ResultResponse;
@@ -32,11 +32,11 @@ public class UserController {
         return new ResultResponse<>("학생정보", result);
     }
     // 통신용
-    @PostMapping("/professor")
+    @PostMapping("/list")
     public ResultResponse<?> getProInfo(@RequestBody Map<String, List<Long>> request){
         List<Long> userId = request.get("userId");
-        List<ProGetDto> result = userService.ProInfoList(userId);
-        return new ResultResponse<>("교수정보" , result);
+        List<UserInfoGetDto> result = userService.UserInfoList(userId);
+        return new ResultResponse<>("유저목록" , result);
     }
 
     // 유저 프로필

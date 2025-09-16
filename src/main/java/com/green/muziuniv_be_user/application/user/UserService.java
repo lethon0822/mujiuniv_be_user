@@ -32,8 +32,8 @@ public class UserService {
     }
 
     //통신용
-    public List<ProGetDto> ProInfoList(List<Long> userId){
-        return userMapper.findProByUserId(userId);
+    public List<UserInfoGetDto> UserInfoList(List<Long> userId){
+        return userMapper.findUserInfoByUserId(userId);
     }
 
     // 유저 목록 조회용(staff 기능)
