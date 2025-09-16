@@ -17,7 +17,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.Map;
 
 @Slf4j
@@ -27,6 +29,21 @@ import java.util.Map;
 public class AccountController {
     private final AccountService accountService;
     private final JwtTokenManager jwtTokenManager;
+
+    //계정생성
+    @PostMapping("/sign-up")
+    public ResponseEntity<?> createUserAccount(@RequestPart MultipartFile excel,
+                                               @RequestPart("data") String data){
+
+
+        try {
+            accountService.processExcelFile(excel, data);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("파일 처리 중 오류 발생");
+        }
+        return ResponseEntity.ok(null);
+    }
 
     @PostMapping("/login")
     public ResultResponse<?> login(HttpServletResponse response,

@@ -35,6 +35,10 @@ public class UserController {
     @PostMapping("/list")
     public ResultResponse<?> getProInfo(@RequestBody Map<String, List<Long>> request){
         List<Long> userId = request.get("userId");
+        if(userId == null){
+            return new ResultResponse<>("유저목록이 존재하지 않습니다", null);
+        }
+
         List<UserInfoGetDto> result = userService.UserInfoList(userId);
         return new ResultResponse<>("유저목록" , result);
     }
@@ -47,7 +51,7 @@ public class UserController {
         return new ResultResponse<>("유저정보", result.getLoginId() == null ? "해당사항없음" : result);
     }
 
-    //  추후 User 폴더 생성시 이 파일의 내용은 user로 이동
+    // 유저 목록 조회
     @GetMapping("/list")
     public ResponseEntity<?> getMember(@ModelAttribute MemberGetReq req) {
         return ResponseEntity.ok(userService.findUser(req));

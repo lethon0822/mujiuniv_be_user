@@ -37,14 +37,13 @@ public class UserService {
     }
 
     // 유저 목록 조회용(staff 기능)
-
-
     public List<MemberGetRes> findUser(MemberGetReq req){
         return userMapper.findUser(req);
     }
 
 
     /**
+     * 유저 프로필 메소드
      * 1차적으로 User entity 정보를 가져옵니다\n
      * changeUserDto는 분기처리 담당입니다 User 객체를 넘겨주면 userRole을 구분하여
      * studentInfo 또는 proInfo 메소드로 넘겨줍니다

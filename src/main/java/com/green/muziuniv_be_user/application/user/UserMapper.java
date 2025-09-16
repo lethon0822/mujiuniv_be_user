@@ -13,7 +13,7 @@ import java.util.List;
 public interface UserMapper {
     List<StudentGetDto> findStudentByUserId(List<Long> userId);
 
-    List<UserInfoGetDto> findUserInfoByUserId(List<Long> userId);
+    List<UserInfoGetDto> findUserInfoByUserId(List<Long> userIdList);
 
     List<MemberGetRes> findUser(MemberGetReq req);
 }

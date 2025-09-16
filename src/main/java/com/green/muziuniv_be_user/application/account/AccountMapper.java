@@ -13,6 +13,9 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface AccountMapper {
+    //학번, 사번 max값
+    String findMaxLoginId(String userRole);
+
     AccountLoginRes findByUserInfo(AccountLoginReq req);
 
     AccountFindIdRes findIdByEmailAndPhone(AccountFindIdReq req);

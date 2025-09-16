@@ -64,6 +64,9 @@ spring:
     time-zone: Asia/Seoul
     date-format: yyyy-MM-dd HH:mm:ss
 
+  servlet:
+    multipart:
+      max-file-size: 20MB
 
 
 
