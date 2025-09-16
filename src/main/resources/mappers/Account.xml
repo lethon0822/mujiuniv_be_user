@@ -14,9 +14,11 @@
 
     </select>
 
-    <select id="">
-
-
+    <select id="findIdByEmailAndPhone">
+        SELECT user_name, login_id
+        FROM user
+        WHERE email = #{email}
+        AND phone = #{phone}
     </select>
 
     <select id="selectMyPrivacy">

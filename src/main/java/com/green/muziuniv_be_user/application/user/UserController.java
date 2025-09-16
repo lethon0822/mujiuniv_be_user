@@ -1,8 +1,8 @@
 package com.green.muziuniv_be_user.application.user;
 
 
-import com.green.muziuniv_be_user.application.user.model.ProGetRes;
-import com.green.muziuniv_be_user.application.user.model.StudentGetRes;
+import com.green.muziuniv_be_user.application.user.model.ProGetDto;
+import com.green.muziuniv_be_user.application.user.model.StudentGetDto;
 import com.green.muziuniv_be_user.application.user.model.UserGetRes;
 import com.green.muziuniv_be_user.configuration.model.ResultResponse;
 import com.green.muziuniv_be_user.configuration.model.SignedUser;
@@ -25,14 +25,14 @@ public class UserController {
     @PostMapping("/student")
     public ResultResponse<?> getStudentInfo(@RequestBody Map<String, List<Long>> request) {
         List<Long> userId = request.get("userId");
-        List<StudentGetRes> result = userService.studentInfoList(userId);
+        List<StudentGetDto> result = userService.studentInfoList(userId);
         return new ResultResponse<>("학생정보", result);
     }
     // 통신용
     @PostMapping("/professor")
     public ResultResponse<?> getProInfo(@RequestBody Map<String, List<Long>> request){
         List<Long> userId = request.get("userId");
-        List<ProGetRes> result = userService.ProInfoList(userId);
+        List<ProGetDto> result = userService.ProInfoList(userId);
         return new ResultResponse<>("교수정보" , result);
     }
 

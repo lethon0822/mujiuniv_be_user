@@ -5,8 +5,8 @@ import com.green.muziuniv_be_user.application.department.DepartmentRepository;
 import com.green.muziuniv_be_user.application.user.Repository.ProfessorRepository;
 import com.green.muziuniv_be_user.application.user.Repository.StudentRepository;
 import com.green.muziuniv_be_user.application.user.Repository.UserRepository;
-import com.green.muziuniv_be_user.application.user.model.ProGetRes;
-import com.green.muziuniv_be_user.application.user.model.StudentGetRes;
+import com.green.muziuniv_be_user.application.user.model.ProGetDto;
+import com.green.muziuniv_be_user.application.user.model.StudentGetDto;
 import com.green.muziuniv_be_user.application.user.model.UserGetRes;
 import com.green.muziuniv_be_user.configuration.model.SignedUser;
 import com.green.muziuniv_be_user.entity.professor.Professor;
@@ -29,12 +29,12 @@ public class UserService {
     private final DepartmentRepository departmentRepository;
 
     //통신용
-    public List<StudentGetRes> studentInfoList(List<Long> userId){
+    public List<StudentGetDto> studentInfoList(List<Long> userId){
         return userMapper.findStudentByUserId(userId);
     }
 
     //통신용
-    public List<ProGetRes> ProInfoList(List<Long> userId){
+    public List<ProGetDto> ProInfoList(List<Long> userId){
         return userMapper.findProByUserId(userId);
     }
 

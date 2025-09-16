@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DepartmentGetRes {
-    private int deptId;
+    private Long deptId;
     private String deptName;
     private String status;
     private int headProfId;
