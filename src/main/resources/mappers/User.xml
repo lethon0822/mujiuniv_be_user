@@ -29,7 +29,7 @@
         LEFT JOIN department ds
         ON s.dept_id = ds.dept_id
         WHERE u.user_id IN
-        <foreach collection="userId" item="id" open="(" separator="," close=")">
+        <foreach collection="userIdList" item="id" open="(" separator="," close=")">
             #{id}
         </foreach>
     </select>

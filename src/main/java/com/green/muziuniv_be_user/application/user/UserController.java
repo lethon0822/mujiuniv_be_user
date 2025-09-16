@@ -35,6 +35,10 @@ public class UserController {
     @PostMapping("/list")
     public ResultResponse<?> getProInfo(@RequestBody Map<String, List<Long>> request){
         List<Long> userId = request.get("userId");
+        if(userId == null){
+            return new ResultResponse<>("유저목록이 존재하지 않습니다", null);
+        }
+
         List<UserInfoGetDto> result = userService.UserInfoList(userId);
         return new ResultResponse<>("유저목록" , result);
     }
