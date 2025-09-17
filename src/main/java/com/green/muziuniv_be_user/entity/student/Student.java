@@ -3,17 +3,16 @@ package com.green.muziuniv_be_user.entity.student;
 import com.green.muziuniv_be_user.entity.department.Department;
 import com.green.muziuniv_be_user.entity.user.User;
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Entity
 @Getter
-@Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode
 public class Student {
 
@@ -30,9 +29,11 @@ public class Student {
     private Department department;
 
     @Column(nullable = false)
+    @Builder.Default
     private int grade = 1;
 
     @Column(nullable = false)
+    @Builder.Default
     private int semester = 1;
 
     @Column(nullable = false)
@@ -42,12 +43,15 @@ public class Student {
     private LocalDate graduDate;
 
     @Column(nullable = false, length = 10)
+    @Builder.Default
     private String status = "재학";
 
     @Column(nullable = false, length = 10)
+    @Builder.Default
     private int majCredit = 0;
 
     @Column(nullable = false, length = 10)
+    @Builder.Default
     private int geCredit = 0;
 
  }
