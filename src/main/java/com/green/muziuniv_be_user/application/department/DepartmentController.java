@@ -30,9 +30,9 @@ public class DepartmentController {
 
     // 필터바에서 사용하는 학과명을 들고오는 메소드
     @GetMapping("/list")
-    public ResultResponse<?> getDeptName(){
+    public ResponseEntity<?> getDeptName(){
         List<DeptNameList> result = departmentService.deptName();
-        return new ResultResponse<>("학과명", result);
+        return ResponseEntity.ok(result);
     }
 
     // 학과 조회

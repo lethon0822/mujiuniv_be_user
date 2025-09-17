@@ -3,7 +3,7 @@
 <mapper namespace="com.green.muziuniv_be_user.application.department.DepartmentMapper">
 
     <select id="findDeptName">
-        SELECT dept_name
+        SELECT dept_name, dept_id
         FROM department
     </select>
 
