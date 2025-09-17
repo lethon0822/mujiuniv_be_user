@@ -50,9 +50,9 @@ public class AccountService {
          throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "아이디/비밀번호를 확인해 주세요.");
       }
 
-      int semesterId = nowSemester();
-      res.setSemesterId(semesterId);
-      //res.setSemesterId(10);
+//      int semesterId = nowSemester();
+//      res.setSemesterId(semesterId);
+      res.setSemesterId(10);
 
       // 보안상 노출 방지
       res.setPassword(null);
