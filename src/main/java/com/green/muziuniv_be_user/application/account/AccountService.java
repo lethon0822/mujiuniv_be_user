@@ -202,9 +202,15 @@ public class AccountService {
                        .build();
 
                // 매핑된 DTO를 DB에 저장
-               // 여기에 save함수 작성
-               logId += 1;
                userRepository.save(user);
+
+               if(userRole.equals("professor")){
+                  insertProfessor(sheet, user);
+               }else{
+                  insertStudent(sheet,user);
+               }
+
+               logId += 1;
             } catch (Exception e){
                failedRows.add(new FailedRow(i, e.getMessage()));
             }
@@ -241,6 +247,35 @@ public class AccountService {
    }
 
 
+   private void insertStudent (Sheet sheet, User user) {
+      for (int i = 1; i <= sheet.getLastRowNum(); i++) {
+         Row row = sheet.getRow(i);
+         if (row == null) {
+            continue; // 빈 행은 건너뜁니다.
+         }
+         try {
 
+         } catch (Exception e) {
+            // RuntimeException 발생 시 자동으로 롤백됩니다.
+            // 데이터베이스에 저장된 중간 데이터가 모두 취소됩니다.
+            throw new RuntimeException("학생 정보 저장 중 오류가 발생하였습니다", e);
+         }
+      }
+   }
 
+   private void insertProfessor (Sheet sheet, User user){
+      for (int i = 1; i <= sheet.getLastRowNum(); i++) {
+         Row row = sheet.getRow(i);
+         if (row == null) {
+            continue; // 빈 행은 건너뜁니다.
+         }
+         try {
+
+         } catch (Exception e) {
+            // RuntimeException 발생 시 자동으로 롤백됩니다.
+            // 데이터베이스에 저장된 중간 데이터가 모두 취소됩니다.
+            throw new RuntimeException("교수 정보 저장 중 오류가 발생하였습니다", e);
+         }
+      }
+   }
 }
