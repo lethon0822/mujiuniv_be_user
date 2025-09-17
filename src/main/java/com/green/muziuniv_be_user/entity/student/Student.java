@@ -30,10 +30,10 @@ public class Student {
     private Department department;
 
     @Column(nullable = false)
-    private int grade;
+    private int grade = 1;
 
     @Column(nullable = false)
-    private int semester;
+    private int semester = 1;
 
     @Column(nullable = false)
     private LocalDate entDate;
