@@ -133,7 +133,7 @@ public class AccountService {
          default -> throw new IllegalStateException("잘못된 월: " + month);
       };
       String scheduleType=""; //TODO: 어케든해봐라
-      SemesterDto result = semesterClient.getSemesterId(year,semester, scheduleType);
+      SemesterDto result = semesterClient.getSemesterId(year,semester);
 
       return result.getSemesterId();
    }
