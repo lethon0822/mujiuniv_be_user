@@ -14,6 +14,7 @@ import org.hibernate.annotations.DynamicUpdate;
 @NoArgsConstructor
 @EqualsAndHashCode
 @DynamicUpdate
+@ToString
 public class Department {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

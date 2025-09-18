@@ -1,15 +1,19 @@
 package com.green.muziuniv_be_user.application.user;
 
 
-import com.green.muziuniv_be_user.application.user.model.ProGetRes;
-import com.green.muziuniv_be_user.application.user.model.StudentGetRes;
+import com.green.muziuniv_be_user.application.user.model.MemberGetReq;
+import com.green.muziuniv_be_user.application.user.model.MemberGetRes;
+import com.green.muziuniv_be_user.application.user.model.UserInfoGetDto;
+import com.green.muziuniv_be_user.application.user.model.StudentGetDto;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
 @Mapper
 public interface UserMapper {
-    List<StudentGetRes> findStudentByUserId(List<Long> userId);
+    List<StudentGetDto> findStudentByUserId(List<Long> userId);
 
-    List<ProGetRes> findProByUserId(List<Long> userId);
+    List<UserInfoGetDto> findUserInfoByUserId(List<Long> userIdList);
+
+    List<MemberGetRes> findUser(MemberGetReq req);
 }

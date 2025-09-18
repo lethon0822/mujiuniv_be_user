@@ -6,5 +6,6 @@ import lombok.ToString;
 @Getter
 @ToString
 public class DeptNameList {
+    private Long deptId;
     private String deptName;
 }

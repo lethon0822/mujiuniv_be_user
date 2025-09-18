@@ -1,13 +1,11 @@
 package com.green.muziuniv_be_user.application.user;
 
 
-import com.green.muziuniv_be_user.application.department.DepartmentRepository;
+
+import com.green.muziuniv_be_user.application.user.model.*;
 import com.green.muziuniv_be_user.application.user.Repository.ProfessorRepository;
 import com.green.muziuniv_be_user.application.user.Repository.StudentRepository;
 import com.green.muziuniv_be_user.application.user.Repository.UserRepository;
-import com.green.muziuniv_be_user.application.user.model.ProGetRes;
-import com.green.muziuniv_be_user.application.user.model.StudentGetRes;
-import com.green.muziuniv_be_user.application.user.model.UserGetRes;
 import com.green.muziuniv_be_user.configuration.model.SignedUser;
 import com.green.muziuniv_be_user.entity.professor.Professor;
 import com.green.muziuniv_be_user.entity.student.Student;
@@ -26,20 +24,32 @@ public class UserService {
     private final UserRepository userRepository;
     private final StudentRepository studentRepository;
     private final ProfessorRepository professorRepository;
-    private final DepartmentRepository departmentRepository;
+
 
     //통신용
-    public List<StudentGetRes> studentInfoList(List<Long> userId){
+    public List<StudentGetDto> studentInfoList(List<Long> userId){
         return userMapper.findStudentByUserId(userId);
     }
 
     //통신용
-    public List<ProGetRes> ProInfoList(List<Long> userId){
-        return userMapper.findProByUserId(userId);
+    public List<UserInfoGetDto> UserInfoList(List<Long> userId){
+        return userMapper.findUserInfoByUserId(userId);
+    }
+
+    //통신용 학과코드 가져오기
+    public String ProDeptName(Long userId){
+        Professor professor = professorRepository.findById(userId).orElseThrow(() -> new RuntimeException("문제발생"));
+        return professor.getDepartment().getDeptName();
+    }
+
+    // 유저 목록 조회용(staff 기능)
+    public List<MemberGetRes> findUser(MemberGetReq req){
+        return userMapper.findUser(req);
     }
 
 
     /**
+     * 유저 프로필 메소드
      * 1차적으로 User entity 정보를 가져옵니다\n
      * changeUserDto는 분기처리 담당입니다 User 객체를 넘겨주면 userRole을 구분하여
      * studentInfo 또는 proInfo 메소드로 넘겨줍니다
@@ -105,4 +115,5 @@ public class UserService {
 
         return proInfo(professor);
     }
-}
+
+    }
