@@ -7,6 +7,7 @@ import com.green.muziuniv_be_user.application.user.Repository.ProfessorRepositor
 import com.green.muziuniv_be_user.application.user.Repository.StudentRepository;
 import com.green.muziuniv_be_user.application.user.Repository.UserRepository;
 import com.green.muziuniv_be_user.configuration.model.JwtUser;
+import com.green.muziuniv_be_user.configuration.util.ImgUploadManager;
 import com.green.muziuniv_be_user.entity.user.Address;
 import com.green.muziuniv_be_user.entity.user.User;
 import com.green.muziuniv_be_user.openfeign.semester.SemesterClient;
@@ -43,6 +44,7 @@ public class AccountService {
    private final UserRepository userRepository;
    private final ProfessorRepository professorRepository;
    private final StudentRepository studentRepository;
+   private final ImgUploadManager imgUploadManager;
 
    public AccountLoginDto login(AccountLoginReq req) {
       AccountLoginRes res = accountMapper.findByUserInfo(req);
@@ -278,4 +280,32 @@ public class AccountService {
          }
       }
    }
+
+   // 프로파일 이미지 저장
+   public String postProfilePic(long signedUserId, MultipartFile pic) {
+
+      return null;
+   }
+
+   // 프로파일 이미지 수정
+   @Transactional
+   public String patchProfilePic(long signedUserId, MultipartFile pic) {
+      User user = userRepository.findById(signedUserId)
+              .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "존재하지 않는 사용자입니다."));
+      imgUploadManager.removeProfileDirectory(signedUserId);
+      String savedFileName = imgUploadManager.saveProfilePic(signedUserId, pic);
+      user.setUserPic(savedFileName);
+      return savedFileName;
+   }
+
+   // 프로파일 이미지 삭제(기본 사진으로)
+   @Transactional
+   public void deleteProfilePic(long signedUserId) {
+      User user = userRepository.findById(signedUserId)
+              .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "존재하지 않는 사용자입니다."));
+      imgUploadManager.removeProfileDirectory(signedUserId);
+      user.setUserPic(null);
+   }
+
+
 }
