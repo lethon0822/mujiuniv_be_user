@@ -1,16 +1,35 @@
 constants:
   file:
-    directory: /home/download
+    upload-directory: /home/download
+  jwt:
+    refresh-token-cookie-path: /mujiuniv-api/api/auth/reissue
+
+eureka:
+  client:
+    enabled: false
+
+server:
+  port: 8080
+
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: health
 
 spring:
-  application:
-    name: rainbow-academic-management
+  cloud:
+    kubernetes:
+      discovery:
+        enabled: true
+      reload:
+        enabled: true
+        strategy: refresh
   datasource:
-    url: jdbc:mariadb://192.168.0.39/final_project_user
-    username: green3
-    password: figma502
-    driver-class-name: org.mariadb.jdbc.Driver
-mybatis:
-  configuration:
-    map-underscore-to-camel-case: true
-  mapper-locations: mappers/**/*.xml
+    url: jdbc:log4jdbc:mariadb://192.168.0.39/final_project_user
+  jpa:
+    hibernate:
+      ddl-auto: update
