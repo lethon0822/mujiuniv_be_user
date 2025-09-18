@@ -30,13 +30,7 @@ public class Professor {
     private LocalDate hireDate;
 
     @Column(nullable = false, length = 20)
-    private String status;
+    @Builder.Default
+    private String status = "재직";
 
-    //save 시점에 한번 시행되는 메소드
-    @PrePersist
-    public void prePersist() { //default 처리는 무조건 이걸로.
-        if (user == null) {
-            this.status = "재직";
-        }
-    }
 }

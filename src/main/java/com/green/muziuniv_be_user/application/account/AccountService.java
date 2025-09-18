@@ -3,11 +3,16 @@ package com.green.muziuniv_be_user.application.account;
 
 import com.green.muziuniv_be_user.application.account.model.*;
 import com.green.muziuniv_be_user.application.account.privacyandpwd.model.*;
+import com.green.muziuniv_be_user.application.department.DepartmentService;
+import com.green.muziuniv_be_user.application.department.model.DeptNameList;
 import com.green.muziuniv_be_user.application.user.Repository.ProfessorRepository;
 import com.green.muziuniv_be_user.application.user.Repository.StudentRepository;
 import com.green.muziuniv_be_user.application.user.Repository.UserRepository;
 import com.green.muziuniv_be_user.configuration.model.JwtUser;
 import com.green.muziuniv_be_user.configuration.util.ImgUploadManager;
+import com.green.muziuniv_be_user.entity.department.Department;
+import com.green.muziuniv_be_user.entity.professor.Professor;
+import com.green.muziuniv_be_user.entity.student.Student;
 import com.green.muziuniv_be_user.entity.user.Address;
 import com.green.muziuniv_be_user.entity.user.User;
 import com.green.muziuniv_be_user.openfeign.semester.SemesterClient;
@@ -33,6 +38,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -45,6 +52,7 @@ public class AccountService {
    private final ProfessorRepository professorRepository;
    private final StudentRepository studentRepository;
    private final ImgUploadManager imgUploadManager;
+   private final DepartmentService departmentService;
 
    public AccountLoginDto login(AccountLoginReq req) {
       AccountLoginRes res = accountMapper.findByUserInfo(req);
@@ -101,7 +109,7 @@ public class AccountService {
       return accountMapper.updateMyPrivacy(req);
    }
 
-   @Transactional
+
    public int updateMyPwd(PwdPutReq req) {
       // 들어온 요청 값 확인
       log.info("요청된 이메일: {}", req.getEmail());
@@ -162,6 +170,9 @@ public class AccountService {
             throw new IllegalArgumentException("지원하지 않는 엑셀 형식입니다.");
          }
 
+         List<DeptNameList> deptRes = departmentService.deptName();
+         Map<String, Long> deptResMap = deptRes.stream().collect(Collectors.toMap(dept -> dept.getDeptName(), dept -> dept.getDeptId()));
+
          // 첫 번째 시트 가져오기
          Sheet sheet = workbook.getSheetAt(0);
 
@@ -184,47 +195,46 @@ public class AccountService {
                String bDay = changeString(row.getCell(1));
                String hashedPw = firstPwd(bDay);
 
-               // 주소
-               String postcode = String.valueOf(row.getCell(5));
-               String address = row.getCell(6).getStringCellValue();
-               String addDetail = row.getCell(7).getStringCellValue();
-
-               Address finalAddress = new Address(postcode,address,addDetail);
-
                User user = User.builder()
                        .userRole(userRole)
                        .loginId(String.valueOf(logId))
                        .password(hashedPw)
                        .userName(row.getCell(0).getStringCellValue())
-                       .birthDate(LocalDate.parse(bDay, DateTimeFormatter.ofPattern("yyyy-MM-dd")))
+                       .birthDate(row.getCell(1).getLocalDateTimeCellValue().toLocalDate())
                        .gender(row.getCell(2).getStringCellValue())
                        .email(row.getCell(3).getStringCellValue())
                        .phone(row.getCell(4).getStringCellValue())
-                       .address(finalAddress)
+                       .address(finalAddress(row))
                        .build();
+
+               //학과명 map으로 변환
+               Long id = deptResMap.get(row.getCell(8).getStringCellValue());
+               Department department = Department.builder().deptId(id).build();
 
                // 매핑된 DTO를 DB에 저장
                userRepository.save(user);
+               logId += 1;
 
                if(userRole.equals("professor")){
-                  insertProfessor(sheet, user);
+                  insertProfessor(row, user, department);
                }else{
-                  insertStudent(sheet,user);
+                  insertStudent(row,user, department);
                }
 
-               logId += 1;
             } catch (Exception e){
-               failedRows.add(new FailedRow(i, e.getMessage()));
+               throw e;
             }
          }
       } catch (Exception e) {
          // RuntimeException 발생 시 자동으로 롤백됩니다.
          // 데이터베이스에 저장된 중간 데이터가 모두 취소됩니다.
-         throw new RuntimeException("엑셀 파일 처리 중 오류가 발생했습니다.", e);
+         throw new RuntimeException("파일 처리 중 오류가 발생했습니다. 파일을 확인해주십시오.", e);
       }
    }
 
-   //날짜 열 값 String으로 변환
+   /**
+    * 날짜 변환
+    */
    private String changeString(Cell cell){
       if (cell.getCellType() == CellType.NUMERIC && DateUtil.isCellDateFormatted(cell)) {
          // 엑셀 날짜를 Date 객체로 가져오기
@@ -241,43 +251,58 @@ public class AccountService {
 
    }
 
-   //초기 비밀번호 설정
+   /**
+    * 주소 정보
+    */
+   private Address finalAddress(Row row){
+      String postcode = String.valueOf((long)row.getCell(5).getNumericCellValue());
+      String address = row.getCell(6).getStringCellValue();
+      String addDetail = row.getCell(7).getStringCellValue();
+      return new Address(postcode,address,addDetail);
+   }
+
+   /**
+    * 초기 비밀번호 설정(생년월일)
+    */
    private String firstPwd(String bDay){
       // 생일 String 에서 숫자부분만 남김
       String pwd = bDay.replace("-","");
       return passwordEncoder.encode(pwd);
    }
 
-
-   private void insertStudent (Sheet sheet, User user) {
-      for (int i = 1; i <= sheet.getLastRowNum(); i++) {
-         Row row = sheet.getRow(i);
-         if (row == null) {
-            continue; // 빈 행은 건너뜁니다.
-         }
-         try {
-
-         } catch (Exception e) {
-            // RuntimeException 발생 시 자동으로 롤백됩니다.
-            // 데이터베이스에 저장된 중간 데이터가 모두 취소됩니다.
-            throw new RuntimeException("학생 정보 저장 중 오류가 발생하였습니다", e);
-         }
+   /**
+    * 학생 테이블에 insert
+    */
+   private void insertStudent (Row row, User user, Department department) {
+      try {
+         Student student = Student.builder()
+                 .user(user)
+                 .department(department)
+                 .entDate(row.getCell(9).getLocalDateTimeCellValue().toLocalDate())
+                 .build();
+         studentRepository.save(student);
+      } catch (Exception e) {
+         // RuntimeException 발생 시 자동으로 롤백됩니다.
+         // 데이터베이스에 저장된 중간 데이터가 모두 취소됩니다.
+         throw new RuntimeException("학생 정보 저장 중 오류가 발생하였습니다", e);
       }
    }
 
-   private void insertProfessor (Sheet sheet, User user){
-      for (int i = 1; i <= sheet.getLastRowNum(); i++) {
-         Row row = sheet.getRow(i);
-         if (row == null) {
-            continue; // 빈 행은 건너뜁니다.
-         }
-         try {
-
-         } catch (Exception e) {
-            // RuntimeException 발생 시 자동으로 롤백됩니다.
-            // 데이터베이스에 저장된 중간 데이터가 모두 취소됩니다.
-            throw new RuntimeException("교수 정보 저장 중 오류가 발생하였습니다", e);
-         }
+   /**
+    * 교수 테이블에 추가
+    */
+   private void insertProfessor (Row row, User user, Department department){
+      try {
+         Professor professor = Professor.builder()
+                 .user(user)
+                 .department(department)
+                 .hireDate(row.getCell(9).getLocalDateTimeCellValue().toLocalDate())
+                 .build();
+         professorRepository.save(professor);
+      } catch (Exception e) {
+         // RuntimeException 발생 시 자동으로 롤백됩니다.
+         // 데이터베이스에 저장된 중간 데이터가 모두 취소됩니다.
+         throw new RuntimeException("교수 정보 저장 중 오류가 발생하였습니다", e);
       }
    }
 
@@ -309,3 +334,4 @@ public class AccountService {
 
 
 }
+

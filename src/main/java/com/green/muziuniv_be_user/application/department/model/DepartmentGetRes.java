@@ -17,8 +17,8 @@ public class DepartmentGetRes {
     private int headProfId;
     private String deptOffice;
     private String deptTel;
-    private String deptMaxStd;
-    private String deptPeople;
+    private Integer deptMaxStd;
+    private Integer deptPeople;
     private String deptCode;
     private String userName;
 }
