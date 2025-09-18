@@ -42,6 +42,12 @@ public class UserController {
         List<UserInfoGetDto> result = userService.UserInfoList(userId);
         return new ResultResponse<>("유저목록" , result);
     }
+    //통신용
+    @GetMapping("/dept")
+    public ResponseEntity<?> getProDept(@RequestParam("id") Long userId){
+        return ResponseEntity.ok(null);
+    }
+
 
     // 유저 프로필
     @GetMapping("/profile")

@@ -36,6 +36,12 @@ public class UserService {
         return userMapper.findUserInfoByUserId(userId);
     }
 
+    //통신용 학과코드 가져오기
+    public String ProDeptName(Long userId){
+        Professor professor = professorRepository.findById(userId).orElseThrow(() -> new RuntimeException("문제발생"));
+        return professor.getDepartment().getDeptName();
+    }
+
     // 유저 목록 조회용(staff 기능)
     public List<MemberGetRes> findUser(MemberGetReq req){
         return userMapper.findUser(req);
