@@ -131,4 +131,26 @@ public class AccountController {
                 "authorities", auth.getAuthorities().toString()
         ));
     }
+
+
+    @PostMapping("pic")
+    public ResponseEntity<?> uploadPicture(@AuthenticationPrincipal SignedUser signedUser
+                                           ,@RequestParam MultipartFile pic) {
+
+        String savedFileName = accountService.postProfilePic(signedUser.signedUserId, pic);
+        return null;
+    }
+
+    @PatchMapping("pic")
+    public ResultResponse<?> patchProfilePic(@AuthenticationPrincipal SignedUser signedUser
+            , @RequestPart MultipartFile pic) {
+        String savedFileName = accountService.patchProfilePic(signedUser.signedUserId, pic);
+        return new ResultResponse<>("프로파일 사진 수정 완료", savedFileName);
+    }
+
+    @DeleteMapping("pic")
+    public ResultResponse<?> patchProfilePic(@AuthenticationPrincipal SignedUser signedUser) {
+        accountService.deleteProfilePic(signedUser.signedUserId);
+        return new ResultResponse<>("프로파일 사진 삭제 완료", null);
+    }
 }
