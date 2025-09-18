@@ -45,7 +45,8 @@ public class UserController {
     //통신용
     @GetMapping("/dept")
     public ResponseEntity<?> getProDept(@RequestParam("id") Long userId){
-        return ResponseEntity.ok(null);
+        userService.ProDeptName(userId);
+        return ResponseEntity.ok(userService.ProDeptName(userId));
     }
 
 

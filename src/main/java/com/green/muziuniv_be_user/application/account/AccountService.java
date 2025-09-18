@@ -9,6 +9,7 @@ import com.green.muziuniv_be_user.application.user.Repository.ProfessorRepositor
 import com.green.muziuniv_be_user.application.user.Repository.StudentRepository;
 import com.green.muziuniv_be_user.application.user.Repository.UserRepository;
 import com.green.muziuniv_be_user.configuration.model.JwtUser;
+import com.green.muziuniv_be_user.configuration.util.ImgUploadManager;
 import com.green.muziuniv_be_user.entity.department.Department;
 import com.green.muziuniv_be_user.entity.professor.Professor;
 import com.green.muziuniv_be_user.entity.student.Student;
@@ -50,6 +51,7 @@ public class AccountService {
    private final UserRepository userRepository;
    private final ProfessorRepository professorRepository;
    private final StudentRepository studentRepository;
+   private final ImgUploadManager imgUploadManager;
    private final DepartmentService departmentService;
 
    public AccountLoginDto login(AccountLoginReq req) {
@@ -58,9 +60,9 @@ public class AccountService {
          throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "아이디/비밀번호를 확인해 주세요.");
       }
 
-      int semesterId = nowSemester();
-      res.setSemesterId(semesterId);
-      //res.setSemesterId(10);
+//      int semesterId = nowSemester();
+//      res.setSemesterId(semesterId);
+      res.setSemesterId(10);
 
       // 보안상 노출 방지
       res.setPassword(null);
@@ -140,6 +142,7 @@ public class AccountService {
          case 7,8,9,10,11,12 -> 2;
          default -> throw new IllegalStateException("잘못된 월: " + month);
       };
+      String scheduleType=""; //TODO: 어케든해봐라
       SemesterDto result = semesterClient.getSemesterId(year,semester);
 
       return result.getSemesterId();
@@ -302,5 +305,33 @@ public class AccountService {
          throw new RuntimeException("교수 정보 저장 중 오류가 발생하였습니다", e);
       }
    }
+
+   // 프로파일 이미지 저장
+   public String postProfilePic(long signedUserId, MultipartFile pic) {
+
+      return null;
+   }
+
+   // 프로파일 이미지 수정
+   @Transactional
+   public String patchProfilePic(long signedUserId, MultipartFile pic) {
+      User user = userRepository.findById(signedUserId)
+              .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "존재하지 않는 사용자입니다."));
+      imgUploadManager.removeProfileDirectory(signedUserId);
+      String savedFileName = imgUploadManager.saveProfilePic(signedUserId, pic);
+      user.setUserPic(savedFileName);
+      return savedFileName;
+   }
+
+   // 프로파일 이미지 삭제(기본 사진으로)
+   @Transactional
+   public void deleteProfilePic(long signedUserId) {
+      User user = userRepository.findById(signedUserId)
+              .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "존재하지 않는 사용자입니다."));
+      imgUploadManager.removeProfileDirectory(signedUserId);
+      user.setUserPic(null);
+   }
+
+
 }
 

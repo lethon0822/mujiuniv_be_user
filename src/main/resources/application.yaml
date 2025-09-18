@@ -15,6 +15,8 @@ constants:
     header-key: Authorization
     secret-key: DaeguGreenArtAcademyClass502RoomForJavaSpringBootFighting
 
+    domain: greenart.n-e.kr
+
     access-token-cookie-name: access-token
     access-token-cookie-path: /
     access-token-cookie-validity-seconds: 1_800 # 30 mins (s): 60 * 30
