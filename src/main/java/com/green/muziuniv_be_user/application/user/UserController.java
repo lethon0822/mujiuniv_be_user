@@ -23,7 +23,6 @@ import java.util.Map;
 public class UserController {
     private final UserService userService;
 
-
     // 통신용
     @PostMapping("/student")
     public ResultResponse<?> getStudentInfo(@RequestBody Map<String, List<Long>> request) {
@@ -44,9 +43,9 @@ public class UserController {
     }
     //통신용
     @GetMapping("/dept")
-    public ResponseEntity<?> getProDept(@RequestParam("user_id") Long userId){
-        String  result = userService.ProDeptCode(userId);
-        return ResponseEntity.ok(result);
+    public ResultResponse<String> getProDept(@RequestParam("user_id") Long userId) {
+        String result = userService.ProDeptCode(userId);
+        return new ResultResponse<>("교수 학과 조회 성공", result);
     }
 
 
@@ -63,5 +62,6 @@ public class UserController {
     public ResponseEntity<?> getMember(@ModelAttribute MemberGetReq req) {
         return ResponseEntity.ok(userService.findUser(req));
     }
+
 
 }
