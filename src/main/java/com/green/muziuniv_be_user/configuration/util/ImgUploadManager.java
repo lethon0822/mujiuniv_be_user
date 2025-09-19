@@ -1,5 +1,6 @@
 package com.green.muziuniv_be_user.configuration.util;
 
+import com.green.muziuniv_be_user.configuration.constants.ConstFile;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -15,12 +16,12 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class ImgUploadManager {
-    private final String pic;
+    private final ConstFile constFile;
     private final FileUtils fileUtils;
 
     public List<String> saveFeedPics(long userId, List<MultipartFile> pics) {
         //폴더 생성
-        String directory = String.format("%s/%d", pic, userId);
+        String directory = String.format("%s/%d", constFile.getDirectory(), userId);
         fileUtils.makeFolders(directory);
 
         List<String> randomFileNames = new ArrayList<>(pics.size());
@@ -40,7 +41,7 @@ public class ImgUploadManager {
     }
 
     private String makeProfileDirectoryPath(long userId) {
-        return String.format("%s/%d",  pic, userId);
+        return String.format("%s/%d", constFile.getDirectory(), userId);
     }
 
     //프로파일 유저 폴더 삭제
