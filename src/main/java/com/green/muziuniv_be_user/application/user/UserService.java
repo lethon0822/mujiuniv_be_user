@@ -84,6 +84,7 @@ public class UserService {
                 .address(user.getAddress().getAddress())
                 .addDetail(user.getAddress().getAddDetail())
                 .phone(user.getPhone())
+                .userPic(user.getUserPic())
                 .build();
 
         return finalUserInfo;
@@ -125,14 +126,14 @@ public class UserService {
     // ------------------------------------------------------------
 
     @Transactional
-    public void signUp(long signedUserId, MultipartFile pic) {
+    public String postProfilePic(long signedUserId, MultipartFile pic) {
         User user = userRepository.findById(signedUserId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "존재하지 않는 사용자입니다."));
-        // 이거 필요
-        if(pic != null) {
-            String savedFileName = imgUploadManager.saveProfilePic(user.getUserId(), pic);
-            user.setUserPic(savedFileName);
-        }
+
+        String savedFileName = imgUploadManager.saveProfilePic(user.getUserId(), pic);
+        user.setUserPic(savedFileName);
+
+        return savedFileName;
     }
 
     public UserProfileGetRes getProfileUser(UserProfileGetDto dto) {

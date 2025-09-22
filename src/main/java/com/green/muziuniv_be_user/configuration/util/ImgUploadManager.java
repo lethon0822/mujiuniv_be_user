@@ -19,27 +19,6 @@ public class ImgUploadManager {
     private final ConstFile constFile;
     private final FileUtils fileUtils;
 
-    public List<String> saveFeedPics(long userId, List<MultipartFile> pics) {
-        //폴더 생성
-        String directory = String.format("%s/%d", constFile.getDirectory(), userId);
-        fileUtils.makeFolders(directory);
-
-        List<String> randomFileNames = new ArrayList<>(pics.size());
-        for(MultipartFile pic : pics) {
-            String randomFileName = fileUtils.makeRandomFileName(pic); //랜덤파일 이름 생성
-            randomFileNames.add(randomFileName); //리턴할 randomFileNames에 이름 추가
-
-            String savePath = directory + "/" + randomFileName;
-            try {
-                fileUtils.transferTo(pic, savePath);
-            } catch (IOException e) {
-                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "피드 이미지 저장에 실패하였습니다.");
-            }
-        }
-
-        return randomFileNames;
-    }
-
     private String makeProfileDirectoryPath(long userId) {
         return String.format("%s/%d", constFile.getDirectory(), userId);
     }
