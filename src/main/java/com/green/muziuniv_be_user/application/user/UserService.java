@@ -7,12 +7,17 @@ import com.green.muziuniv_be_user.application.user.Repository.ProfessorRepositor
 import com.green.muziuniv_be_user.application.user.Repository.StudentRepository;
 import com.green.muziuniv_be_user.application.user.Repository.UserRepository;
 import com.green.muziuniv_be_user.configuration.model.SignedUser;
+import com.green.muziuniv_be_user.configuration.util.ImgUploadManager;
 import com.green.muziuniv_be_user.entity.professor.Professor;
 import com.green.muziuniv_be_user.entity.student.Student;
 import com.green.muziuniv_be_user.entity.user.User;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -24,6 +29,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final StudentRepository studentRepository;
     private final ProfessorRepository professorRepository;
+    private final ImgUploadManager imgUploadManager;
 
 
     //통신용
@@ -116,4 +122,38 @@ public class UserService {
         return proInfo(professor);
     }
 
+    // ------------------------------------------------------------
+
+    @Transactional
+    public void signUp(long signedUserId, MultipartFile pic) {
+        User user = userRepository.findById(signedUserId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "존재하지 않는 사용자입니다."));
+        // 이거 필요
+        if(pic != null) {
+            String savedFileName = imgUploadManager.saveProfilePic(user.getUserId(), pic);
+            user.setUserPic(savedFileName);
+        }
     }
+
+    public UserProfileGetRes getProfileUser(UserProfileGetDto dto) {
+        return userMapper.findProfileByUserId(dto);
+    }
+
+    @Transactional
+    public String patchProfilePic(long signedUserId, MultipartFile pic) {
+        User user = userRepository.findById(signedUserId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "존재하지 않는 사용자입니다."));
+        imgUploadManager.removeProfileDirectory(signedUserId);
+        String savedFileName = imgUploadManager.saveProfilePic(signedUserId, pic);
+        user.setUserPic(savedFileName);
+        return savedFileName;
+    }
+
+    @Transactional
+    public void deleteProfilePic(long signedUserId) {
+        User user = userRepository.findById(signedUserId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "존재하지 않는 사용자입니다."));
+        imgUploadManager.removeProfileDirectory(signedUserId);
+        user.setUserPic(null);
+    }
+}
