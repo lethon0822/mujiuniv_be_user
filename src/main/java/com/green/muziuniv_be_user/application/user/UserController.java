@@ -12,9 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.xml.transform.Result;
 import java.util.List;
 import java.util.Map;
 
@@ -66,32 +64,4 @@ public class UserController {
         return ResponseEntity.ok(userService.findUser(req));
     }
 
-    //-------------------------------------------------------------------------
-
-
-    @PostMapping("/profile")
-    public ResultResponse<?> postProfilePic (@AuthenticationPrincipal SignedUser signedUserId
-            , @RequestPart MultipartFile pic) {
-
-        String savedFileName = userService.postProfilePic(signedUserId.signedUserId, pic);
-        return new ResultResponse<>("프로파일 사진 등록 완료", savedFileName);
-    }
-
-    //이거 필요
-    @PatchMapping("/profile")
-    public ResultResponse<?> patchProfilePic(@AuthenticationPrincipal SignedUser signedUserId
-            , @RequestPart MultipartFile pic) {
-        String savedFileName = userService.patchProfilePic(signedUserId.signedUserId, pic);
-        return new ResultResponse<>("프로파일 사진 수정 완료", savedFileName);
-    }
-
-    //DeleteMapping - /profile/pic
-    //프로파일 있는 폴더를 삭제하고
-    //return new ResultResponse<>("프로파일 사진 삭제 완료", null);
-
-    @DeleteMapping("/profile")
-    public ResultResponse<?> patchProfilePic(@AuthenticationPrincipal SignedUser signedUserId) {
-        userService.deleteProfilePic(signedUserId.signedUserId);
-        return new ResultResponse<>("프로파일 사진 삭제 완료", null);
-    }
 }

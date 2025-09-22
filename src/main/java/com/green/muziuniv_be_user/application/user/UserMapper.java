@@ -3,6 +3,7 @@ package com.green.muziuniv_be_user.application.user;
 
 import com.green.muziuniv_be_user.application.user.model.*;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
