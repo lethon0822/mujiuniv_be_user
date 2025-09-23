@@ -38,7 +38,7 @@ public class UserController {
             return new ResultResponse<>("유저목록이 존재하지 않습니다", null);
         }
 
-        List<UserInfoGetDto> result = userService.UserInfoList(userId);
+        Map<Long, UserInfoGetDto> result = userService.UserInfoList(userId);
         return new ResultResponse<>("유저목록" , result);
     }
     //통신용

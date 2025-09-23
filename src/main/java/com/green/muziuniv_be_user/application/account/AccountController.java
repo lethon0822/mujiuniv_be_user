@@ -9,18 +9,16 @@ import com.green.muziuniv_be_user.configuration.model.ResultResponse;
 import com.green.muziuniv_be_user.configuration.model.SignedUser;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.Map;
+
 
 @Slf4j
 @RestController
@@ -77,13 +75,13 @@ public class AccountController {
         return ResponseEntity.ok(result);
     }
 
-    @GetMapping("/check")
-    public ResponseEntity<?> check(Authentication auth) {
-        if (auth == null || !auth.isAuthenticated()) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
-        return ResponseEntity.ok(Map.of("loginId", auth.getName()));
-    }
+//    @GetMapping("/check")
+//    public ResponseEntity<?> check(Authentication auth) {
+//        if (auth == null || !auth.isAuthenticated()) {
+//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+//        }
+//        return ResponseEntity.ok(Map.of("loginId", auth.getName()));
+//    }
 
     @GetMapping("/profile")
     public ResultResponse<?> getProfileUser(@AuthenticationPrincipal SignedUser signedUser) {
@@ -113,23 +111,6 @@ public class AccountController {
     public ResponseEntity<?> updatePwd (@AuthenticationPrincipal SignedUser signedUser, @RequestBody PwdPutReq req) {
         int result = accountService.updateMyPwd(req);
         return ResponseEntity.ok(result);
-    }
-
-
-    // 이건 뭔지 모름
-    // AccountController.java
-    @GetMapping("/whoami")
-    public ResponseEntity<?> whoami(HttpServletRequest req, Authentication auth) {
-        HttpSession s = req.getSession(false);
-        String sid = (s != null) ? s.getId() : "no-session";
-        if (auth == null || !auth.isAuthenticated()) {
-            return ResponseEntity.status(401).body(Map.of("sid", sid, "auth", "anonymous"));
-        }
-        return ResponseEntity.ok(Map.of(
-                "sid", sid,
-                "principal", auth.getName(),
-                "authorities", auth.getAuthorities().toString()
-        ));
     }
 
 

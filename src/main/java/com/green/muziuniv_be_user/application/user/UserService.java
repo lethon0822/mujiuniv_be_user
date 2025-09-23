@@ -15,6 +15,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -32,8 +34,14 @@ public class UserService {
     }
 
     //통신용
-    public List<UserInfoGetDto> UserInfoList(List<Long> userId){
-        return userMapper.findUserInfoByUserId(userId);
+    public Map<Long, UserInfoGetDto> UserInfoList(List<Long> userId){
+        List<UserInfoGetDto> userInfo = userMapper.findUserInfoByUserId(userId);
+        Map<Long, UserInfoGetDto> result = userInfo.stream()
+                .collect(Collectors.toMap(
+                        item -> item.getUserId(),
+                        item -> item
+                ));
+        return result;
     }
 
     //통신용 학과코드 가져오기
