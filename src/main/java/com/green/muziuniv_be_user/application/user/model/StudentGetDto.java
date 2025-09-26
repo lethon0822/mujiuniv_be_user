@@ -5,6 +5,7 @@ import lombok.Getter;
 
 @Getter
 public class StudentGetDto {
+    private String userId;
     private String loginId;
     private String userName;
     private int grade;
