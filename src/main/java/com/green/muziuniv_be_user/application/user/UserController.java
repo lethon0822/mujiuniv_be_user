@@ -23,7 +23,7 @@ import java.util.Map;
 public class UserController {
     private final UserService userService;
 
-    // 출석, 성적 학생 정보 조회
+    // 통신용(출석, 성적 학생 정보 조회)
     @PostMapping("/student")
     public ResultResponse<?> getStudentInfo(@RequestBody Map<String, List<Long>> request) {
         List<Long> userId = request.get("userId");
@@ -49,7 +49,6 @@ public class UserController {
         return ResponseEntity.ok(result);
     }
 
-
     // 유저 프로필
     @GetMapping("/profile")
     public ResultResponse<?> getUserInfo(@AuthenticationPrincipal SignedUser signedUserId){
@@ -63,5 +62,7 @@ public class UserController {
     public ResponseEntity<?> getMember(@ModelAttribute MemberGetReq req) {
         return ResponseEntity.ok(userService.findUser(req));
     }
+
+    // TODO: 유저 상태 변경
 
 }
