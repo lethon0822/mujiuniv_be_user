@@ -8,6 +8,7 @@ import com.green.muziuniv_be_user.application.department.model.DeptNameList;
 import com.green.muziuniv_be_user.application.user.Repository.ProfessorRepository;
 import com.green.muziuniv_be_user.application.user.Repository.StudentRepository;
 import com.green.muziuniv_be_user.application.user.Repository.UserRepository;
+import com.green.muziuniv_be_user.configuration.constants.ConstJwt;
 import com.green.muziuniv_be_user.configuration.model.JwtUser;
 //import com.green.muziuniv_be_user.configuration.util.ImgUploadManager;
 import com.green.muziuniv_be_user.entity.department.Department;
@@ -53,16 +54,18 @@ public class AccountService {
    private final StudentRepository studentRepository;
 //   private final ImgUploadManager imgUploadManager;
    private final DepartmentService departmentService;
+   private final ConstJwt constJwt;
 
    public AccountLoginDto login(AccountLoginReq req) {
       AccountLoginRes res = accountMapper.findByUserInfo(req);
       if(res == null || !passwordEncoder.matches(req.getPassword(), res.getPassword())) {
          throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "아이디/비밀번호를 확인해 주세요.");
       }
+      res.setExpiresAt(constJwt.accessTokenCookieValiditySeconds);
 
-//      int semesterId = nowSemester();
-//      res.setSemesterId(semesterId);
-      res.setSemesterId(10);
+      int semesterId = nowSemester();
+      res.setSemesterId(semesterId);
+   //   res.setSemesterId(10);
 
       // 보안상 노출 방지
       res.setPassword(null);

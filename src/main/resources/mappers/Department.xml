@@ -5,6 +5,8 @@
     <select id="findDeptName">
         SELECT dept_name, dept_id
         FROM department
+        WHERE status = 1
+        ORDER BY dept_name
     </select>
 
     <select id="findDeptCode">

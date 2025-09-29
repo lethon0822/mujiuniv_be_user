@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Map;
@@ -23,8 +24,7 @@ import java.util.Map;
 public class UserController {
     private final UserService userService;
 
-
-    // 통신용
+    // 통신용(출석, 성적 학생 정보 조회)
     @PostMapping("/student")
     public ResultResponse<?> getStudentInfo(@RequestBody Map<String, List<Long>> request) {
         List<Long> userId = request.get("userId");
@@ -39,11 +39,11 @@ public class UserController {
             return new ResultResponse<>("유저목록이 존재하지 않습니다", null);
         }
 
-        List<UserInfoGetDto> result = userService.UserInfoList(userId);
+        Map<Long, UserInfoGetDto> result = userService.UserInfoList(userId);
         return new ResultResponse<>("유저목록" , result);
     }
     //통신용
-    @GetMapping("/dept")
+    @GetMapping("/dept/code")
     public ResponseEntity<?> getProDept(@RequestParam("user_id") Long userId){
         String  result = userService.ProDeptCode(userId);
         return ResponseEntity.ok(result);
@@ -54,7 +54,6 @@ public class UserController {
     @GetMapping("/profile")
     public ResultResponse<?> getUserInfo(@AuthenticationPrincipal SignedUser signedUserId){
         UserGetRes result = userService.userInfoDto(signedUserId);
-
         return new ResultResponse<>("유저정보", result.getLoginId() == null ? "해당사항없음" : result);
     }
 
@@ -62,6 +61,32 @@ public class UserController {
     @GetMapping("/list")
     public ResponseEntity<?> getMember(@ModelAttribute MemberGetReq req) {
         return ResponseEntity.ok(userService.findUser(req));
+    }
+
+    // TODO: 유저 상태 변경
+
+    //-------------------------------------------------------------------------
+
+
+    @PostMapping("/profile")
+    public ResultResponse<?> postProfilePic (@AuthenticationPrincipal SignedUser signedUserId
+            , @RequestPart MultipartFile pic) {
+
+        String savedFileName = userService.postProfilePic(signedUserId.signedUserId, pic);
+        return new ResultResponse<>("프로파일 사진 등록 완료", savedFileName);
+    }
+
+    @PatchMapping("/profile")
+    public ResultResponse<?> patchProfilePic(@AuthenticationPrincipal SignedUser signedUserId
+            , @RequestPart MultipartFile pic) {
+        String savedFileName = userService.patchProfilePic(signedUserId.signedUserId, pic);
+        return new ResultResponse<>("프로파일 사진 수정 완료", savedFileName);
+    }
+
+    @DeleteMapping("/profile")
+    public ResultResponse<?> patchProfilePic(@AuthenticationPrincipal SignedUser signedUserId) {
+        userService.deleteProfilePic(signedUserId.signedUserId);
+        return new ResultResponse<>("프로파일 사진 삭제 완료", null);
     }
 
 }
