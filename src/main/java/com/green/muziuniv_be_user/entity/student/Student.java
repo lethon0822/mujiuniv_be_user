@@ -6,7 +6,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 
 @Entity
 @Getter
@@ -44,7 +43,7 @@ public class Student {
 
     @Column(nullable = false, length = 10)
     @Builder.Default
-    private String status = "재학";
+    private String status = "1";
 
     @Column(nullable = false, length = 10)
     @Builder.Default
