@@ -6,7 +6,7 @@
         SELECT dept_name, dept_id
         FROM department
         WHERE status = 1
-        ORDER BY status, dept_name
+        ORDER BY dept_name
     </select>
 
     <select id="findDeptCode">
@@ -42,15 +42,17 @@
         FROM student
         WHERE status != '졸업'
         GROUP BY dept_id
-        ) s ON d.dept_id = s.dept_id;
+        ) s ON d.dept_id = s.dept_id
         <where>
             <if test="status != null and status != ''">
                 d.status = #{status}
             </if>
             <if test="keyword != null and keyword != ''">
-                AND (d.dept_code LIKE '%${keyword}%' OR d.dept_name LIKE '%${keyword}%')
+                (d.dept_code LIKE '%${keyword}%' OR d.dept_name LIKE '%${keyword}%')
             </if>
         </where>
+        ORDER BY status DESC, dept_name
+
     </select>
 
 </mapper>

@@ -64,10 +64,7 @@ public class UserController {
     }
 
     // TODO: 유저 상태 변경
-
     //-------------------------------------------------------------------------
-
-
     @PostMapping("/profile")
     public ResultResponse<?> postProfilePic (@AuthenticationPrincipal SignedUser signedUserId
             , @RequestPart MultipartFile pic) {
