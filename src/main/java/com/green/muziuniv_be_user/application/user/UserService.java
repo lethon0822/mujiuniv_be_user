@@ -61,7 +61,6 @@ public class UserService {
         return userMapper.findUser(req);
     }
 
-
     /**
      * 유저 프로필 메소드
      * 1차적으로 User entity 정보를 가져옵니다\n
