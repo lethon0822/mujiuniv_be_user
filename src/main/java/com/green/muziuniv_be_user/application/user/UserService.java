@@ -130,7 +130,28 @@ public class UserService {
         return proInfo(professor);
     }
 
-    // ------------------------------------------------------------
+    @Transactional
+    public void updateUserStatus(Long userId, String status) {
+        // 학생인지 확인
+        var studentOpt = studentRepository.findByUserId(userId);
+        if (studentOpt.isPresent()) {
+            var student = studentOpt.get();
+            student.setStatus(status); // ex: 휴학 / 재학
+            return;
+        }
+
+        // 교수가 맞는지 확인
+        var professorOpt = professorRepository.findByUserId(userId);
+        if (professorOpt.isPresent()) {
+            var professor = professorOpt.get();
+            professor.setStatus(status); // ex: 휴직 / 재직
+            return;
+        }
+
+        // 둘 다 아니면 에러
+        throw new RuntimeException("해당 userId에 대한 Student/Professor 정보를 찾을 수 없음");
+    }
+
 
     @Transactional
     public String postProfilePic(long signedUserId, MultipartFile pic) {
