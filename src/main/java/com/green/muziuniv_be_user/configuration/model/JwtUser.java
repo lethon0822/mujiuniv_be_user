@@ -11,4 +11,5 @@ import lombok.ToString;
 public class JwtUser {
     private Long signedUserId;
     private String role;
+
 }

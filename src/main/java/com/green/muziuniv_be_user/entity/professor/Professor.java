@@ -4,11 +4,11 @@ import com.green.muziuniv_be_user.entity.department.Department;
 import com.green.muziuniv_be_user.entity.user.User;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
 
 import java.time.LocalDate;
 @Entity
 @Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -31,6 +31,6 @@ public class Professor {
 
     @Column(nullable = false, length = 20)
     @Builder.Default
-    private String status = "재직";
+    private String status = "1";
 
 }

@@ -39,7 +39,7 @@ public class DepartmentController {
     @GetMapping
     public ResultResponse<?> findDepartment(@ModelAttribute DepartmentGetReq req){
         List<DepartmentGetRes> result = departmentService.findAllDepartment(req);
-        return new ResultResponse<>("학과 개설", result );
+        return new ResultResponse<>("학과 목록", result );
     }
 
     // 학과 소속 교수진 조회

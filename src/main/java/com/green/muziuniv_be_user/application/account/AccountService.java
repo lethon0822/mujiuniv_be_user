@@ -192,6 +192,9 @@ public class AccountService {
             if (row == null) {
                continue; // 빈 행은 건너뜁니다.
             }
+            //delete로 셀을 삭제시 null이 됨 때문에 null 체크도 하기
+            Cell cell = row.getCell(i);
+            if (cell == null || cell.toString().trim().isEmpty()) continue;
 
             try{
                // bDay 날짜를 문자열로 바꾸고 비밀번호 설정

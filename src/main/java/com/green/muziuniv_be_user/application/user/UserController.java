@@ -63,9 +63,20 @@ public class UserController {
         return ResponseEntity.ok(userService.findUser(req));
     }
 
-    // TODO: 유저 상태 변경
 
+    // TODO: 유저 상태 변경
     //-------------------------------------------------------------------------
+
+    // 유저 상태 변경 (휴학/복학/휴직/복직)
+    @PatchMapping("/status")
+    public ResponseEntity<?> updateUserStatus(@RequestParam Long userId,
+                                              @RequestParam String status) {
+        userService.updateUserStatus(userId, status);
+        return ResponseEntity.ok("상태 변경 완료");
+    }
+
+
+
 
 
     @PostMapping("/profile")
