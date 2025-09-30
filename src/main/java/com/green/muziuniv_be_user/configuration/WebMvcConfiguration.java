@@ -1,5 +1,6 @@
 package com.green.muziuniv_be_user.configuration;
 
+import com.green.muziuniv_be_user.configuration.constants.ConstFile;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -14,6 +15,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class WebMvcConfiguration implements WebMvcConfigurer {
     private final String uploadPath;
+
     public WebMvcConfiguration(@Value("${constants.file.directory}") String uploadPath) {
 
         this.uploadPath = uploadPath;
@@ -23,7 +25,7 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry){
         registry.addResourceHandler("/pic/**")
-                .addResourceLocations("file:" + uploadPath);
+                .addResourceLocations("file:" + uploadPath + "/");
     }
 
 //    @Override

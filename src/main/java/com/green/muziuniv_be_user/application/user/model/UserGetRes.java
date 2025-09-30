@@ -19,6 +19,7 @@ public class UserGetRes {
     private String address;
     private String addDetail;
     private String phone;
+    private String userPic;
 
     //학생용
     private int grade;

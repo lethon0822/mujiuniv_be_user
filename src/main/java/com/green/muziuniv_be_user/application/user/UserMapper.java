@@ -15,4 +15,5 @@ public interface UserMapper {
 
     List<MemberGetRes> findUser(MemberGetReq req);
 
+    UserProfileGetRes findProfileByUserId(UserProfileGetDto dto);
 }
