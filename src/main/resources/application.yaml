@@ -1,6 +1,6 @@
 constants:
   file:
-    directory: /home/download   # 그대로 유지
+    directory: D:/student/jyj/project2/pic   # 그대로 유지
 
   open-feign:
     function: RAINBOW-ACADEMIC-FUNCTION
@@ -69,6 +69,12 @@ spring:
   servlet:
     multipart:
       max-file-size: 20MB
+
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      password: green502
 
 
 
