@@ -1,6 +1,6 @@
 constants:
   file:
-    directory: D:/student/jyj/project2/pic   # 그대로 유지
+    directory: home/download # 그대로 유지
 
   open-feign:
     function: mujiuniv-function
