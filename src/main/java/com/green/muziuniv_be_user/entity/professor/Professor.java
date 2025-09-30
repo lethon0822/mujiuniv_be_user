@@ -9,6 +9,7 @@ import org.hibernate.annotations.ColumnDefault;
 import java.time.LocalDate;
 @Entity
 @Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
