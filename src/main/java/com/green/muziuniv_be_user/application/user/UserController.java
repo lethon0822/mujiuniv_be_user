@@ -64,14 +64,21 @@ public class UserController {
     }
 
     // 유저 상태 변경 (휴학/복학/휴직/복직)
-    @PatchMapping("/status")
+    @PutMapping("/status")
     public ResponseEntity<?> updateUserStatus(@RequestParam Long userId,
                                               @RequestParam String status) {
         userService.updateUserStatus(userId, status);
         return ResponseEntity.ok("상태 변경 완료");
     }
 
-
+    @GetMapping("/{userId}")
+    public ResultResponse<UserInfoGetDto> getUserById(@PathVariable Long userId) {
+        UserInfoGetDto dto = userService.findUserById(userId);
+        if (dto == null) {
+            return new ResultResponse<>("유저가 존재하지 않습니다.", null);
+        }
+        return new ResultResponse<>("단일 유저 조회 성공", dto);
+    }
 
 
     @PostMapping("/profile")

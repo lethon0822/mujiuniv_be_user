@@ -8,4 +8,5 @@ public class UserInfoGetDto {
     private Long userId;
     private String userName;
     private String deptName;
+    private Integer status;
 }

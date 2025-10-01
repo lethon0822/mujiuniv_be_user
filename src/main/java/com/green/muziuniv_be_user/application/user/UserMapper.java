@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface UserMapper {
@@ -16,4 +17,7 @@ public interface UserMapper {
     List<MemberGetRes> findUser(MemberGetReq req);
 
     UserProfileGetRes findProfileByUserId(UserProfileGetDto dto);
+
+    // 단일 유저 조회
+    UserInfoGetDto findUserById(@Param("userId") Long userId);
 }

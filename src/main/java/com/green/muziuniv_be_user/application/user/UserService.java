@@ -132,7 +132,8 @@ public class UserService {
     }
 
     @Transactional
-    public void updateUserStatus(Long userId, String status) {
+    public void updateUserStatus(Long userId, String state) {
+        String status = (state.equals("휴학")) ? "0" : "1";
         // 학생인지 확인
         var studentOpt = studentRepository.findByUserId(userId);
         if (studentOpt.isPresent()) {
@@ -185,5 +186,9 @@ public class UserService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "존재하지 않는 사용자입니다."));
         imgUploadManager.removeProfileDirectory(signedUserId);
         user.setUserPic(null);
+    }
+    @Transactional
+    public UserInfoGetDto findUserById(Long userId) {
+        return userMapper.findUserById(userId);
     }
 }
