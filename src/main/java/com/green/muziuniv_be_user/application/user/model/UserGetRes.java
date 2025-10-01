@@ -9,6 +9,7 @@ import lombok.*;
 @Builder(toBuilder = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserGetRes {
+    private long userId;
     private String loginId;
     private String userName;
     private String deptName;

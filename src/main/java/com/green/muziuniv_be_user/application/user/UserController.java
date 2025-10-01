@@ -75,23 +75,11 @@ public class UserController {
         return ResponseEntity.ok("상태 변경 완료");
     }
 
-
-
-
-
-    @PostMapping("/profile")
-    public ResultResponse<?> postProfilePic (@AuthenticationPrincipal SignedUser signedUserId
-            , @RequestPart MultipartFile pic) {
-
-        String savedFileName = userService.postProfilePic(signedUserId.signedUserId, pic);
-        return new ResultResponse<>("프로파일 사진 등록 완료", savedFileName);
-    }
-
     @PatchMapping("/profile")
     public ResultResponse<?> patchProfilePic(@AuthenticationPrincipal SignedUser signedUserId
             , @RequestPart MultipartFile pic) {
-        String savedFileName = userService.patchProfilePic(signedUserId.signedUserId, pic);
-        return new ResultResponse<>("프로파일 사진 수정 완료", savedFileName);
+        String updateFileName = userService.patchProfilePic(signedUserId.signedUserId, pic);
+        return new ResultResponse<>("프로파일 사진 수정 완료", updateFileName);
     }
 
     @DeleteMapping("/profile")
