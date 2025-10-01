@@ -14,7 +14,6 @@ public enum EnumUserRole implements EnumMapperType {
     STUDENT("student", "학생"),
     PROFESSOR("professor", "교수"),
     STAFF("staff", "직원")
-
     ;
 
     private final String code;

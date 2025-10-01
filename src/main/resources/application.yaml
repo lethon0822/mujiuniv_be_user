@@ -1,9 +1,9 @@
 constants:
   file:
-    directory: D:/student/jyj/project2/pic   # 그대로 유지
+    directory: home/download # 그대로 유지
 
   open-feign:
-    function: RAINBOW-ACADEMIC-FUNCTION
+    function: mujiuniv-function
 
 
   jwt:
@@ -30,7 +30,7 @@ constants:
 
 spring:
   application:
-    name: rainbow-academic-user # [중요]유레카를 사용할시 이 이름을 사용한다
+    name: mujiuniv-user # [중요]유레카를 사용할시 이 이름을 사용한다
 
   datasource:
     # log4jdbc 사용 중이므로 DriverSpy + jdbc:log4jdbc: 형태 유지
