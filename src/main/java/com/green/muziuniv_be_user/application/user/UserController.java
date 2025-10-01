@@ -68,7 +68,7 @@ public class UserController {
     //-------------------------------------------------------------------------
 
     // 유저 상태 변경 (휴학/복학/휴직/복직)
-    @PutMapping("/status")
+    @PatchMapping("/status")
     public ResponseEntity<?> updateUserStatus(@RequestParam Long userId,
                                               @RequestParam String status) {
         userService.updateUserStatus(userId, status);
@@ -86,19 +86,11 @@ public class UserController {
 
 
 
-    @PostMapping("/profile")
-    public ResultResponse<?> postProfilePic (@AuthenticationPrincipal SignedUser signedUserId
-            , @RequestPart MultipartFile pic) {
-
-        String savedFileName = userService.postProfilePic(signedUserId.signedUserId, pic);
-        return new ResultResponse<>("프로파일 사진 등록 완료", savedFileName);
-    }
-
     @PatchMapping("/profile")
     public ResultResponse<?> patchProfilePic(@AuthenticationPrincipal SignedUser signedUserId
             , @RequestPart MultipartFile pic) {
-        String savedFileName = userService.patchProfilePic(signedUserId.signedUserId, pic);
-        return new ResultResponse<>("프로파일 사진 수정 완료", savedFileName);
+        String updateFileName = userService.patchProfilePic(signedUserId.signedUserId, pic);
+        return new ResultResponse<>("프로파일 사진 수정 완료", updateFileName);
     }
 
     @DeleteMapping("/profile")
