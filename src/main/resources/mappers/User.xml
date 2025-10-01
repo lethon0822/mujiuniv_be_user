@@ -113,6 +113,20 @@
         </choose>
     </select>
 
+    <select id="findUserById">
+        SELECT
+        u.user_id       AS userId,
+        u.login_id      AS loginId,
+        u.user_name     AS userName,
+        COALESCE(ds.dept_name, dp.dept_name) AS deptName,
+        COALESCE(s.status, p.status, 1) AS status
+        FROM `user` u
+        LEFT JOIN student s     ON u.user_id = s.user_id
+        LEFT JOIN department ds ON s.dept_id = ds.dept_id
+        LEFT JOIN professor p   ON u.user_id = p.user_id
+        LEFT JOIN department dp ON p.dept_id = dp.dept_id
+        WHERE u.user_id = #{userId}
+    </select>
 
 
 </mapper>
