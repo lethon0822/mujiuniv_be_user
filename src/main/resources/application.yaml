@@ -91,16 +91,19 @@ mail:
     host: "smtp.gmail.com"
     username: "mujiuniv@gmail.com"
     password: "dqknokdqkusfndls"
-    port: 587
+    port: 465
     properties:
       mail:
         smtp:
+          ssl:
+            trust: "smtp.gmail.com"
           auth: true
           starttls:
             enable: true
           connectiontimeout: 3000
           timeout: 3000
           writetimeout: 3000
+
 
 
 eureka:
