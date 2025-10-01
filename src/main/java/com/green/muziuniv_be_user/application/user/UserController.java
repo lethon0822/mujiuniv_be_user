@@ -76,9 +76,6 @@ public class UserController {
     }
 
 
-
-
-
     @PostMapping("/profile")
     public ResultResponse<?> postProfilePic (@AuthenticationPrincipal SignedUser signedUserId
             , @RequestPart MultipartFile pic) {

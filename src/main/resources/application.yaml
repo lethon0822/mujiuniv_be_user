@@ -1,6 +1,6 @@
 constants:
   file:
-    directory: home/download # 그대로 유지
+    directory: D:/student/mujiuni/profile # 그대로 유지
 
   open-feign:
     function: mujiuniv-function
@@ -19,8 +19,8 @@ constants:
 
     access-token-cookie-name: access-token
     access-token-cookie-path: /
-    access-token-cookie-validity-seconds: 1_800 # 30 mins (s): 60 * 30
-    access-token-validity-milliseconds: 1_800_000 # 30 mins (ms): 60 * 30 * 1000
+    access-token-cookie-validity-seconds: 3_000 # 30 mins (s): 60 * 50
+    access-token-validity-milliseconds: 3_000_000 # 30 mins (ms): 60 * 50 * 1000
 
     refresh-token-cookie-name: refresh-token
     refresh-token-cookie-path: /api/account/reissue # 이 주소로만 reissue가 날아옴 다른 주소로 하면 안됨!!
