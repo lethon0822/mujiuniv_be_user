@@ -83,6 +83,7 @@ public class UserService {
         UserGetRes data = changeUserDto(user);
 
         UserGetRes finalUserInfo = data.toBuilder()
+                .userId(user.getUserId())
                 .loginId(user.getLoginId())
                 .userName(user.getUserName())
                 .birthDate(user.getBirthDate().toString())
@@ -131,7 +132,8 @@ public class UserService {
     }
 
     @Transactional
-    public void updateUserStatus(Long userId, String status) {
+    public void updateUserStatus(Long userId, String state) {
+        String status = (state.equals("휴학")) ? "0" : "1";
         // 학생인지 확인
         var studentOpt = studentRepository.findByUserId(userId);
         if (studentOpt.isPresent()) {
@@ -152,22 +154,6 @@ public class UserService {
         throw new RuntimeException("해당 userId에 대한 Student/Professor 정보를 찾을 수 없음");
     }
 
-
-    @Transactional
-    public String postProfilePic(long signedUserId, MultipartFile pic) {
-        User user = userRepository.findById(signedUserId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "존재하지 않는 사용자입니다."));
-
-        String savedFileName = imgUploadManager.saveProfilePic(user.getUserId(), pic);
-        user.setUserPic(savedFileName);
-
-        return savedFileName;
-    }
-
-    public UserProfileGetRes getProfileUser(UserProfileGetDto dto) {
-        return userMapper.findProfileByUserId(dto);
-    }
-
     @Transactional
     public String patchProfilePic(long signedUserId, MultipartFile pic) {
         User user = userRepository.findById(signedUserId)
@@ -184,5 +170,9 @@ public class UserService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "존재하지 않는 사용자입니다."));
         imgUploadManager.removeProfileDirectory(signedUserId);
         user.setUserPic(null);
+    }
+    @Transactional
+    public UserInfoGetDto findUserById(Long userId) {
+        return userMapper.findUserById(userId);
     }
 }
