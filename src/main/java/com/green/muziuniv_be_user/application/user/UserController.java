@@ -75,6 +75,17 @@ public class UserController {
         return ResponseEntity.ok("상태 변경 완료");
     }
 
+    @GetMapping("/{userId}")
+    public ResultResponse<UserInfoGetDto> getUserById(@PathVariable Long userId) {
+        UserInfoGetDto dto = userService.findUserById(userId);
+        if (dto == null) {
+            return new ResultResponse<>("유저가 존재하지 않습니다.", null);
+        }
+        return new ResultResponse<>("단일 유저 조회 성공", dto);
+    }
+
+
+
     @PatchMapping("/profile")
     public ResultResponse<?> patchProfilePic(@AuthenticationPrincipal SignedUser signedUserId
             , @RequestPart MultipartFile pic) {
