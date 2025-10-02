@@ -91,7 +91,7 @@ mail:
     host: "smtp.gmail.com"
     username: "mujiuniv@gmail.com"
     password: "dqknokdqkusfndls"
-    port: 465
+    port: 587
     properties:
       mail:
         smtp:

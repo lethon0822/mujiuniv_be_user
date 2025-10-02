@@ -9,6 +9,7 @@ import com.green.muziuniv_be_user.configuration.model.ResultResponse;
 import com.green.muziuniv_be_user.configuration.model.SignedUser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +24,9 @@ import java.util.Map;
 @RequestMapping("/user")
 public class UserController {
     private final UserService userService;
+
+    @Value("${constants.file.directory}")
+    private String uploadDir;
 
     // 통신용(출석, 성적 학생 정보 조회)
     @PostMapping("/student")
