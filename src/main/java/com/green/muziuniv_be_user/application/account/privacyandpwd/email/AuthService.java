@@ -39,6 +39,7 @@ public class AuthService {
 
         makeRandomNumber();
         String setFrom = "dionisos198@naver.com"; // email-config에 설정한 자신의 이메일 주소를 입력
+       // String setFrom = "mujiuniv@gmail.com"; // email-config에 설정한 자신의 이메일 주소를 입력
         String toMail = email;
         String title = "인증번호가 도착했습니다."; // 이메일 제목
         String content =
@@ -66,7 +67,7 @@ public class AuthService {
             // 이러한 경우 MessagingException이 발생
             e.printStackTrace();//e.printStackTrace()는 예외를 기본 오류 스트림에 출력하는 메서드
         }
-        redisUtil.setDataExpire(toMail, Integer.toString(authCodeNumber), 60*5);
+        //redisUtil.setDataExpire(toMail, Integer.toString(authCodeNumber), 60*5);
     }
     public boolean checkAll(String email,String authCode){
         String savedCode = redisUtil.getData(email);
