@@ -13,6 +13,6 @@ public class PwdPutReq {
     private String email;
 
     @NotBlank(message = "비밀번호는 필수 입력 값입니다.")
-    @Pattern(regexp="(?=.*[0-9])(?=.*[a-zA-Z]).{8,20}")
+    @Pattern(regexp="(?=.*[0-9])(?=.*[a-zA-Z])(?=.*\\W)(?=\\S+$).{8,20}")
     private String password;
 }
