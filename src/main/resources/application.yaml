@@ -79,7 +79,7 @@ spring:
       host: smtp.gmail.com
       username: mujiuniv@gmail.com
       password: dqknokdqkusfndls
-      port: 587
+      port: 465
       properties:
         mail:
           smtp:
