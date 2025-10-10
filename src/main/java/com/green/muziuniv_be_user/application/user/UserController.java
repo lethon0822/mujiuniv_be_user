@@ -9,6 +9,7 @@ import com.green.muziuniv_be_user.configuration.model.ResultResponse;
 import com.green.muziuniv_be_user.configuration.model.SignedUser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +24,9 @@ import java.util.Map;
 @RequestMapping("/user")
 public class UserController {
     private final UserService userService;
+
+    @Value("${constants.file.directory}")
+    private String uploadDir;
 
     // 통신용(출석, 성적 학생 정보 조회)
     @PostMapping("/student")
@@ -68,9 +72,9 @@ public class UserController {
     //-------------------------------------------------------------------------
 
     // 유저 상태 변경 (휴학/복학/휴직/복직)
-    @PatchMapping("/status")
+    @PutMapping("/status")
     public ResponseEntity<?> updateUserStatus(@RequestParam Long userId,
-                                              @RequestParam String status) {
+                                              @RequestParam Integer status) {
         userService.updateUserStatus(userId, status);
         return ResponseEntity.ok("상태 변경 완료");
     }

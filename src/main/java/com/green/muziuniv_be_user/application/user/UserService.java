@@ -132,8 +132,8 @@ public class UserService {
     }
 
     @Transactional
-    public void updateUserStatus(Long userId, String state) {
-        String status = (state.equals("휴학")) ? "0" : "1";
+    public void updateUserStatus(Long userId, Integer state) {
+        String status = String.valueOf(state);
         // 학생인지 확인
         var studentOpt = studentRepository.findByUserId(userId);
         if (studentOpt.isPresent()) {

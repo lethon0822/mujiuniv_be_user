@@ -9,6 +9,7 @@ import com.green.muziuniv_be_user.configuration.model.ResultResponse;
 import com.green.muziuniv_be_user.configuration.model.SignedUser;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -108,7 +109,7 @@ public class AccountController {
 
     // 비밀번호 변경
     @PutMapping("/renewal")
-    public ResponseEntity<?> updatePwd (@AuthenticationPrincipal SignedUser signedUser, @RequestBody PwdPutReq req) {
+    public ResponseEntity<?> updatePwd (@AuthenticationPrincipal SignedUser signedUser, @Valid @RequestBody PwdPutReq req) {
         int result = accountService.updateMyPwd(req);
         return ResponseEntity.ok(result);
     }

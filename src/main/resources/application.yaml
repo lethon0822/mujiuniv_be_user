@@ -5,7 +5,6 @@ constants:
   open-feign:
     function: mujiuniv-function
 
-
   jwt:
     issuer: green@green.com
     schema: Bearer
@@ -74,9 +73,23 @@ spring:
     redis:
       host: localhost
       port: 6379
-      password: green502
 
-
+  mail:
+    smtp:
+      host: smtp.gmail.com
+      username: mujiuniv@gmail.com
+      password: dqknokdqkusfndls
+      port: 465
+      properties:
+        mail:
+          smtp:
+            ssl:
+              trust: smtp.gmail.com
+              # protocols: TLSv2.0
+            auth: true
+            starttls:
+              enable: true
+            timeout: 1800000
 
 mybatis:
   configuration:
@@ -86,21 +99,8 @@ mybatis:
   # resources 폴더 기준 classpath 접두사로 명시하는 것이 안전
   mapper-locations: classpath:/mappers/**/*.xml
 
-mail:
-  smtp:
-    host: "smtp.gmail.com"
-    username: "mujiuniv@gmail.com"
-    password: "dqknokdqkusfndls"
-    port: 587
-    properties:
-      mail:
-        smtp:
-          auth: true
-          starttls:
-            enable: true
-          connectiontimeout: 3000
-          timeout: 3000
-          writetimeout: 3000
+
+
 
 
 eureka:
