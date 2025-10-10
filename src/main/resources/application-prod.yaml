@@ -1,6 +1,6 @@
 constants:
   file:
-    upload-directory: /home/download
+    directory: /home/download
   jwt:
     refresh-token-cookie-path: /mujiuniv-api/api/auth/reissue
 
