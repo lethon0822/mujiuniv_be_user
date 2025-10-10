@@ -72,9 +72,9 @@ public class UserController {
     //-------------------------------------------------------------------------
 
     // 유저 상태 변경 (휴학/복학/휴직/복직)
-    @PatchMapping("/status")
+    @PutMapping("/status")
     public ResponseEntity<?> updateUserStatus(@RequestParam Long userId,
-                                              @RequestParam String status) {
+                                              @RequestParam Integer status) {
         userService.updateUserStatus(userId, status);
         return ResponseEntity.ok("상태 변경 완료");
     }
