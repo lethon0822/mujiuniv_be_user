@@ -18,9 +18,8 @@ import java.util.Random;
 @Slf4j
 public class AuthService {
     private final RedisUtil redisUtil;
-
     private final JavaMailSender mailSender;
-    private int authCodeNumber;
+    private String authCodeNumber;
 
     //임의의 6자리 양수를 반환합니다.
     public void makeRandomNumber() {
@@ -30,7 +29,7 @@ public class AuthService {
             randomNumber += Integer.toString(r.nextInt(10));
         }
 
-        this.authCodeNumber = Integer.parseInt(randomNumber);
+        this.authCodeNumber = randomNumber;
     }
 
 
@@ -39,6 +38,7 @@ public class AuthService {
 
         makeRandomNumber();
         String setFrom = "dionisos198@naver.com"; // email-config에 설정한 자신의 이메일 주소를 입력
+       // String setFrom = "mujiuniv@gmail.com"; // email-config에 설정한 자신의 이메일 주소를 입력
         String toMail = email;
         String title = "인증번호가 도착했습니다."; // 이메일 제목
         String content =
@@ -48,7 +48,8 @@ public class AuthService {
                         "<br>" +
                         "인증번호를 제대로 입력해주세요"; //이메일 내용 삽입
         sendMail(setFrom, toMail, title, content);
-        return Integer.toString(authCodeNumber);
+        log.info("toMail{}, authCodeNumber{}", toMail, authCodeNumber);
+        return authCodeNumber;
     }
 
     //이메일을 전송합니다.
@@ -66,11 +67,11 @@ public class AuthService {
             // 이러한 경우 MessagingException이 발생
             e.printStackTrace();//e.printStackTrace()는 예외를 기본 오류 스트림에 출력하는 메서드
         }
-        redisUtil.setDataExpire(toMail, Integer.toString(authCodeNumber), 60*5);
+        redisUtil.setDataExpire(toMail, authCodeNumber, 60*3);
     }
     public boolean checkAll(String email,String authCode){
         String savedCode = redisUtil.getData(email);
-        log.info("Redis 조회 => key(email): {}, value(savedCode): {}", email, savedCode);
+        log.info("Redis 조회 => key(email): {}, authCode: {}, value(savedCode): {}", email, authCode, savedCode);
 
         if (savedCode == null) {
             return false;
