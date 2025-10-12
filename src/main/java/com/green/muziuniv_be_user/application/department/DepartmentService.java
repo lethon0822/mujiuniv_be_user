@@ -8,9 +8,9 @@ import com.green.muziuniv_be_user.entity.professor.Professor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Random;
 
 
 @Service
@@ -44,9 +44,26 @@ public class DepartmentService {
         return departmentMapper.findAll(req);
     }
 
-    // 학과 코드 중복 검사
-    public int findDeptCode(String deptCode){
-        return departmentMapper.findDeptCode(deptCode);
+    // 학과 코드 생성
+    public String createDeptCode(){
+        Random random = new Random();
+        String resultCode;
+
+        while(true){
+            StringBuilder code = new StringBuilder();
+            for (int i = 0; i < 4; i++) {
+                // 'A'의 아스키코드는 65
+                char c = (char) ('A' + random.nextInt(26)); // 0~25 → A~Z
+                code.append(c);
+            }
+            String result = code.toString();
+            int checkDuplicateCode = departmentMapper.findDeptCode(result);
+            if(checkDuplicateCode == 0){
+                resultCode = result;
+                break;
+            }
+        }
+        return resultCode;
     }
 
     // 학과 정보 수정
