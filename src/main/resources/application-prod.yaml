@@ -2,7 +2,7 @@ constants:
   file:
     directory: /home/download
   jwt:
-    refresh-token-cookie-path: /mujiuniv-api/api/auth/reissue
+    refresh-token-cookie-path: /mujiuniv-api/api/account/reissue # 제발
 
 eureka:
   client:
