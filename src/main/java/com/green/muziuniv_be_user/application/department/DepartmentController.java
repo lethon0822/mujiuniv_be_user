@@ -50,10 +50,10 @@ public class DepartmentController {
         return new ResultResponse("학과장 목록", result);
     }
 
-    // 학과 코드 중복 조회
-    @GetMapping("/code")
-    public ResultResponse<?> findDuplicationDeptCode(@RequestParam("dept_code")String deptCode){
-        int result = departmentService.findDeptCode(deptCode);
+    // 학과 코드 생성
+    @GetMapping("/code/create")
+    public ResultResponse<?> findDuplicationDeptCode(){
+        String result = departmentService.createDeptCode();
         return new ResultResponse<>("코드 확인", result);
     }
 

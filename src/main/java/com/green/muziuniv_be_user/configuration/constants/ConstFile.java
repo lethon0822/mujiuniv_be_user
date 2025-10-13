@@ -11,5 +11,5 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ToString
 public class ConstFile {
     private final String directory;
-    private final String profilePic;
+//    private final String profilePic;
 }

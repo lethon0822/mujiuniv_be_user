@@ -193,7 +193,7 @@ public class AccountService {
                continue; // 빈 행은 건너뜁니다.
             }
             //delete로 셀을 삭제시 null이 됨 때문에 null 체크도 하기
-            Cell cell = row.getCell(i);
+            Cell cell = row.getCell(1);
             if (cell == null || cell.toString().trim().isEmpty()) continue;
 
             try{
