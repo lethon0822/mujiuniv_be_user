@@ -61,12 +61,23 @@ public class UserController {
         return new ResultResponse<>("유저정보", result.getLoginId() == null ? "해당사항없음" : result);
     }
 
+
+
     // 유저 목록 조회
     @GetMapping("/list")
     public ResponseEntity<?> getMember(@ModelAttribute MemberGetReq req) {
         return ResponseEntity.ok(userService.findUser(req));
     }
 
+    // ✅ 유저 상태 조회 (휴직/재직/복직 등)
+    @GetMapping("/status")
+    public ResultResponse<Integer> getUserStatus(@RequestParam Long userId) {
+        Integer status = userService.getUserStatus(userId);
+        if (status == null) {
+            return new ResultResponse<>("유저 상태를 찾을 수 없습니다.", null);
+        }
+        return new ResultResponse<>("유저 상태 조회 성공", status);
+    }
 
     // TODO: 유저 상태 변경
     //-------------------------------------------------------------------------
