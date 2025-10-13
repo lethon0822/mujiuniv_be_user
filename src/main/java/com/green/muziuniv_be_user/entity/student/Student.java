@@ -46,12 +46,4 @@ public class Student {
     @Builder.Default
     private String status = "1";
 
-    @Column(nullable = false, length = 10)
-    @Builder.Default
-    private int majCredit = 0;
-
-    @Column(nullable = false, length = 10)
-    @Builder.Default
-    private int geCredit = 0;
-
  }
