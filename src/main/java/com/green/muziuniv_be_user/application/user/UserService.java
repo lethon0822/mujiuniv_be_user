@@ -134,24 +134,34 @@ public class UserService {
     @Transactional
     public void updateUserStatus(Long userId, Integer state) {
         String status = String.valueOf(state);
-        // 학생인지 확인
+
+        boolean updated = false;
+
+        // 학생 상태 변경
         var studentOpt = studentRepository.findByUserId(userId);
         if (studentOpt.isPresent()) {
             var student = studentOpt.get();
-            student.setStatus(status); // ex: 휴학 / 재학
-            return;
+            student.setStatus(status);
+            studentRepository.save(student);
+            updated = true;
         }
 
-        // 교수가 맞는지 확인
-        var professorOpt = professorRepository.findByUserId(userId);
-        if (professorOpt.isPresent()) {
-            var professor = professorOpt.get();
-            professor.setStatus(status); // ex: 휴직 / 재직
-            return;
+        // 교수 상태 변경
+        if (!updated) {
+            var professorOpt = professorRepository.findByUserId(userId);
+            if (professorOpt.isPresent()) {
+                var professor = professorOpt.get();
+                professor.setStatus(status);
+                professorRepository.save(professor);
+                updated = true;
+            }
         }
 
-        // 둘 다 아니면 에러
-        throw new RuntimeException("해당 userId에 대한 Student/Professor 정보를 찾을 수 없음");
+        if (!updated) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "해당 유저 ID의 교수/학생 정보를 찾을 수 없습니다.");
+        }
+
+        log.info("✅ 상태 변경 완료: userId={}, status={}", userId, status);
     }
 
     @Transactional
@@ -162,6 +172,38 @@ public class UserService {
         String savedFileName = imgUploadManager.saveProfilePic(signedUserId, pic);
         user.setUserPic(savedFileName);
         return savedFileName;
+    }
+
+    @Transactional
+    public Integer getUserStatus(Long userId) {
+        // 1. 유저 기본 정보 조회
+        UserInfoGetDto userInfo = findUserById(userId);
+        if (userInfo == null) return null;
+
+        // 2. 역할에 따라 테이블 분기
+        String role = userInfo.getUserRole(); // "PROFESSOR" / "STUDENT"
+        if ("PROFESSOR".equalsIgnoreCase(role)) {
+            return professorRepository.findById(userId)
+                    .map(p -> {
+                        try {
+                            return Integer.parseInt(p.getStatus());
+                        } catch (NumberFormatException e) {
+                            return null;
+                        }
+                    })
+                    .orElse(null);
+        } else if ("STUDENT".equalsIgnoreCase(role)) {
+            return studentRepository.findById(userId)
+                    .map(s -> {
+                        try {
+                            return Integer.parseInt(s.getStatus());
+                        } catch (NumberFormatException e) {
+                            return null;
+                        }
+                    })
+                    .orElse(null);
+        }
+        return null;
     }
 
     @Transactional
