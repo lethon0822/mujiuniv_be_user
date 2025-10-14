@@ -42,6 +42,9 @@ public class Student {
     @Column
     private LocalDate graduDate;
 
+    @Column(nullable = false)
+    private String type;
+
     @Column(nullable = false, length = 10)
     @Builder.Default
     private String status = "1";

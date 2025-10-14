@@ -22,4 +22,10 @@ public interface UserMapper {
 
     // 학과별 신입생 수
     List<NewStudents> newStudents(int year);
+
+    //교수
+    int countPro();
+
+    //학생
+    List<Integer> countStudent();
 }

@@ -225,4 +225,12 @@ public class UserService {
         List<NewStudents> result = userMapper.newStudents(year);
         return result;
     }
+
+    // 학교 인원 들고오기
+    public CountPeopleRes countPeople(){
+        int pro = userMapper.countPro();
+        List<Integer> stu = userMapper.countStudent();
+        CountPeopleRes result = new CountPeopleRes(stu, pro);
+        return result;
+    }
 }
