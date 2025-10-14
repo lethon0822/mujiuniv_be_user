@@ -1,10 +1,7 @@
 package com.green.muziuniv_be_user.application.user;
 
 
-import com.green.muziuniv_be_user.application.user.model.MemberGetReq;
-import com.green.muziuniv_be_user.application.user.model.UserInfoGetDto;
-import com.green.muziuniv_be_user.application.user.model.StudentGetDto;
-import com.green.muziuniv_be_user.application.user.model.UserGetRes;
+import com.green.muziuniv_be_user.application.user.model.*;
 import com.green.muziuniv_be_user.configuration.model.ResultResponse;
 import com.green.muziuniv_be_user.configuration.model.SignedUser;
 import lombok.RequiredArgsConstructor;
@@ -112,6 +109,13 @@ public class UserController {
     public ResultResponse<?> patchProfilePic(@AuthenticationPrincipal SignedUser signedUserId) {
         userService.deleteProfilePic(signedUserId.signedUserId);
         return new ResultResponse<>("프로파일 사진 삭제 완료", null);
+    }
+
+    // 학과별 신입생 수 파악
+    @GetMapping("/freshman/count")
+    public ResultResponse<?> countNewStudent(){
+        List<NewStudents> result = userService.countNewStudent();
+        return new ResultResponse<>("학과별 신입생 수", result);
     }
 
 }

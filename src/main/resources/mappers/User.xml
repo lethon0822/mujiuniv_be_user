@@ -128,5 +128,15 @@
         WHERE u.user_id = #{userId}
     </select>
 
+<!-- 학과별 신입생 수 -->
+    <select id="newStudents">
+        SELECT COUNT(user_id) AS user, dept_name
+        FROM student s
+        JOIN department d
+        ON s.dept_id = d.dept_id
+        WHERE ent_date > '${year}-03-01'
+        GROUP BY d.dept_id
+        ORDER BY user DESC;
+    </select>
 
 </mapper>
