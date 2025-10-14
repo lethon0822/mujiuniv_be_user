@@ -130,13 +130,26 @@
 
 <!-- 학과별 신입생 수 -->
     <select id="newStudents">
-        SELECT COUNT(user_id) AS user, dept_name
-        FROM student s
-        JOIN department d
-        ON s.dept_id = d.dept_id
+        SELECT COUNT(user_id) AS user, type
+        FROM student
         WHERE ent_date > '${year}-03-01'
-        GROUP BY d.dept_id
+        GROUP BY type
         ORDER BY user DESC;
+    </select>
+
+<!-- 교수 인원  -->
+    <select id="countPro">
+        SELECT COUNT(user_id)
+        FROM professor
+        WHERE STATUS != '2';
+    </select>
+
+<!-- 학생 인원   -->
+    <select id="countStudent">
+        SELECT COUNT(user_id)
+        FROM student
+        WHERE STATUS != '2'
+        GROUP BY grade;
     </select>
 
 </mapper>

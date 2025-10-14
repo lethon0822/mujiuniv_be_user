@@ -6,6 +6,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class NewStudents {
-    private String deptName;
+    private String type;
     private int user;
 }

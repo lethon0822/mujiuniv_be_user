@@ -51,7 +51,7 @@ public class DepartmentController {
     }
 
     // 학과 코드 생성
-    @GetMapping("/code/create")
+    @GetMapping("/code")
     public ResultResponse<?> findDuplicationDeptCode(){
         String result = departmentService.createDeptCode();
         return new ResultResponse<>("코드 확인", result);

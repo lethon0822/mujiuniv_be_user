@@ -118,4 +118,10 @@ public class UserController {
         return new ResultResponse<>("학과별 신입생 수", result);
     }
 
+    // 학교 인원 들고오기
+    @GetMapping("/count")
+    public ResponseEntity<?> countUser(){
+        CountPeopleRes result = userService.countPeople();
+        return ResponseEntity.ok(result);
+    }
 }
