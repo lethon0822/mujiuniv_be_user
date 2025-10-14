@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -216,5 +217,12 @@ public class UserService {
     @Transactional
     public UserInfoGetDto findUserById(Long userId) {
         return userMapper.findUserById(userId);
+    }
+
+    // 학과별 신입생 수
+    public List<NewStudents> countNewStudent(){
+        int year = LocalDate.now().getYear();
+        List<NewStudents> result = userMapper.newStudents(year);
+        return result;
     }
 }
