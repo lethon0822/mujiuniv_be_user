@@ -2,7 +2,7 @@ constants:
   file:
     directory: /home/download
   jwt:
-    refresh-token-cookie-path: /mujiuniv-api/api/auth/reissue
+    refresh-token-cookie-path: /mujiuniv-api/api/account/reissue # 제발
 
 eureka:
   client:
@@ -18,8 +18,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: health
-
+        include: "*"
 spring:
   cloud:
     kubernetes:
@@ -33,3 +32,5 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+    lifecycle:
+      timeout-per-shutdown-phase: 30s  # Pod 종료 대기 시간
