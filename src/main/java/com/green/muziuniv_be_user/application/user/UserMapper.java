@@ -6,7 +6,6 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
-import java.util.Map;
 
 @Mapper
 public interface UserMapper {
@@ -20,4 +19,7 @@ public interface UserMapper {
 
     // 단일 유저 조회
     UserInfoGetDto findUserById(@Param("userId") Long userId);
+
+    // 학과별 신입생 수
+    List<NewStudents> newStudents(int year);
 }
