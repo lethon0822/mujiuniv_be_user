@@ -285,6 +285,7 @@ public class AccountService {
                  .user(user)
                  .department(department)
                  .entDate(row.getCell(9).getLocalDateTimeCellValue().toLocalDate())
+                 .type(row.getCell(10).getStringCellValue())
                  .build();
          studentRepository.save(student);
       } catch (Exception e) {
