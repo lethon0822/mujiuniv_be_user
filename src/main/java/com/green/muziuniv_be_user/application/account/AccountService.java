@@ -2,6 +2,7 @@ package com.green.muziuniv_be_user.application.account;
 
 
 import com.green.muziuniv_be_user.application.account.model.*;
+import com.green.muziuniv_be_user.application.account.model.excelFile.FailedRow;
 import com.green.muziuniv_be_user.application.account.privacyandpwd.model.*;
 import com.green.muziuniv_be_user.application.department.DepartmentService;
 import com.green.muziuniv_be_user.application.department.model.DeptNameList;
@@ -35,7 +36,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -159,7 +159,7 @@ public class AccountService {
    @Transactional
    public void processExcelFile(MultipartFile excel, String userRole)throws IOException {
 
-      Workbook workbook = null;
+      Workbook workbook;
       // InputStream은 자바에서 데이터를 읽어오는 통로, 추상클래스
       // 업로드 된 엑셀 파일의 내용을 읽어오는 통로를 만드는 것
       try (InputStream excelInputStream = excel.getInputStream()) {
@@ -237,6 +237,10 @@ public class AccountService {
          throw new RuntimeException("파일 처리 중 오류가 발생했습니다. 파일을 확인해주십시오.", e);
       }
    }
+   /**
+   * 오류 행 검사
+   * */
+
 
    /**
     * 날짜 변환

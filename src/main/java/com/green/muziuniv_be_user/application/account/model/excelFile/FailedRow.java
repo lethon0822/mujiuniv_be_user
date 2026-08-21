@@ -1,4 +1,4 @@
-package com.green.muziuniv_be_user.application.account.model;
+package com.green.muziuniv_be_user.application.account.model.excelFile;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
